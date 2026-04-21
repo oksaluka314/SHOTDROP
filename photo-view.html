@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея: Весілля Олександра та Марії | SHOTDROP</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+  </head>
+<body>
+
+<header class="header">
+    <div class="logo"><a href="index.html">SHOTDROP</a></div>
+    <div class="gallery-info">
+        <h1>Весілля Олександра та Марії</h1>
+        <p>Фотограф: Олексій Рябченко • 124 фото</p>
+    </div>
+    <a href="#" class="btn-download-all">Завантажити все</a>
+</header>
+
+<div>
+    <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000')">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=400" alt="">
+        <div class="photo-overlay">
+            <div class="icon-badge">❤️</div>
+            <div class="icon-badge">💬</div>
+        </div>
+    </div>
+    <div class="photo-card" onclick="openPhoto('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1000')">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400" alt="">
+        <div class="photo-overlay">
+            <div class="icon-badge">❤️</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="photoModal">
+    <span class="close-modal" onclick="closePhoto()">&times;</span>
+
+    <div class="modal-image-side">
+        <img id="modalImg" src="" alt="Full size photo">
+    </div>
+
+    <div class="modal-sidebar">
+        <div class="like-section">
+            <button class="btn-like" id="likeBtn" onclick="toggleLike()">
+                <span id="likeIcon">♡</span> Мені подобається це фото
+            </button>
+        </div>
+
+        <div class="comments-section" id="commentsList">
+            <h3 style="font-size: 14px; text-transform: uppercase; margin-bottom: 20px;">Побажання до ретуші</h3>
+            <div class="comment-item">
+                <span>Ви</span>
+                Приберіть, будь ласка, відблиск на фоні.
+            </div>
+        </div>
+
+        <div class="comment-input-area">
+            <textarea id="commentText" placeholder="Напишіть, що змінити або просто залиште відгук..."></textarea>
+            <button class="btn-send" onclick="addComment()">Надіслати коментар</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('photoModal');
+    const modalImg = document.getElementById('modalImg');
+    const likeBtn = document.getElementById('likeBtn');
+    const likeIcon = document.getElementById('likeIcon');
+    const commentsList = document.getElementById('commentsList');
+    const commentText = document.getElementById('commentText');
+
+    function openPhoto(src) {
+        modalImg.src = src;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Заборонити прокрутку фону
+    }
+
+    function closePhoto() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function toggleLike() {
+        likeBtn.classList.toggle('liked');
+        if(likeBtn.classList.contains('liked')) {
+            likeIcon.innerText = '❤️';
+            likeBtn.innerText = '❤️ В обраному';
+        } else {
+            likeIcon.innerText = '♡';
+            likeBtn.innerText = '♡ Мені подобається це фото';
+        }
+    }
+
+    function addComment() {
+        const text = commentText.value.trim();
+        if(text) {
+            const div = document.createElement('div');
+            div.className = 'comment-item';
+            div.innerHTML = `<span>Ви</span> ${text}`;
+            commentsList.appendChild(div);
+            commentText.value = '';
+            // Прокрутка до останнього коментаря
+            commentsList.scrollTop = commentsList.scrollHeight;
+        }
+    }
+
+    // Закриття по Esc
+    document.addEventListener('keydown', (e) => {
+        if(e.key === "Escape") closePhoto();
+    });
+</script>
+
+</body>
+</html>
