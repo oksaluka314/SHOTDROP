@@ -58,7 +58,7 @@ img {
 }
 
 .nav-item {
-   
+
     min-width: 180px;
     text-align: center;
 }
@@ -83,8 +83,7 @@ footer {
 .btn-client, .btn-submit, .btn-login, .btn-add, .btn-download-all {
     background-color: #D4C9E0;
     color: #353434;
-    padding: 5% 5%;
-    margin-top: 1%;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -98,7 +97,6 @@ footer {
 /* Sections - всі сторінки */
 section {
     padding: 4% 2%;
-    max-width: 95%;
     margin: 0 auto;
 }
 
@@ -118,13 +116,6 @@ th {
     background-color: #E8DFE8;
 }
 
-/* Main Content */
-.main {
-    flex: 1;
-    padding: 2%;
-}
-
-
 /* ================================================================
    DASHBOARD.HTML - Панель керування фотографа
    ================================================================ */
@@ -132,11 +123,15 @@ th {
 /* Sidebar Styles */
 .sidebar {
     width: 20%;
-    background-color: #FAFAF8;
+    background-color:#9B8DB8;
     padding: 2%;
     height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.logo::first-child {
+    background-color: #9B8DB8;
 }
 
 .sidebar-nav {
@@ -151,16 +146,18 @@ th {
 }
 
 .nav-item.active {
-    color: #BFA8D8;
+    color: #FFFFFF;
     font-weight: 500;
 }
 
-.sidebar-footer {
-    margin-top: auto;
-    font-size: 12px;
-    color: #666;
+.dashboard {
+    display: flex;
 }
 
+.main {
+    width: 80%;
+    padding: 2%;
+}
 /* Project Grid */
 .project-grid {
     display: flex;
@@ -207,6 +204,13 @@ th {
     color: #6B6B6B;
 }
 
+.gallery-info {
+    margin: 0%;
+    font-size: 24px;
+    font-weight: 700;
+    color:#353434;
+  
+}
 
 /* ================================================================
    INDEX.HTML - Головна сторінка
@@ -216,13 +220,12 @@ th {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 0px;
     padding: 6% 2%;
     background-image: url('https://i.pinimg.com/1200x/71/e5/65/71e565e6e651014298cfa1044493b2ac.jpg');
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    position: relative;
+  
 }
 .cta-main {
     background-color: #D4C9E0;
@@ -260,21 +263,20 @@ th {
 }
 
 .header-minimal {
-    padding: 2% 3%;
+    padding: 1% 2%;
     background-color: #9B8DB8;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo-link {
-    font-weight: 700;
-    font-size: 24px;
-    color: #FFFFFF;
-}
+
 
 /* Access Container - для client-access.html */
 .access-container {
-    max-width: 90%;
-    margin: 8% auto;
+    max-width: 55%;
+    margin: 2% auto;
     padding: 4%;
     text-align: center;
     background-color: white;
@@ -297,14 +299,13 @@ th {
     font-size: 14px;
     color: #6B6B6B;
     margin-bottom: 3%;
-    line-height: 1.5;
 }
 
 /* Login Box - для account.html */
 .login-box {
-    max-width: 90%;
-    margin: 3% auto;
-    padding: 2%;
+    width: 55%;
+    margin: 2% auto;
+    padding: 4%;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -341,6 +342,7 @@ th {
 .form-input {
     width: 100%;
     padding: 1.2% 1.5%;
+    margin-bottom: 1.5%;
     font-size: 14px;
     border: 2px solid #D4C9E0;
     border-radius: 5px;
@@ -480,4 +482,167 @@ th {
     align-items: center;
     justify-content: center;
     margin-bottom: 0.5%;
+}
+
+.modal {
+    display: flex;
+    margin-top: 2.5%;
+    margin-left: 15%;
+    width: 70%;
+    height: 80%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+/* Кнопка закриття */
+.close-modal {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #ff4757;
+}
+
+/* Ліва частина: Зображення */
+.modal-image-side {
+    flex: 1.5;
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.modal-image-side img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Фото не обрізається і вписується в межі */
+}
+
+/* Права частина: Сайдбар */
+.modal-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background: #fff;
+    border-left: 1px solid #f0f0f0;
+}
+
+/* Секція лайка */
+.like-section {
+    margin-bottom: 25px;
+}
+
+.btn-like {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #D4C9E0;
+    color: #353434;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.btn-like:hover {
+    background-color: #BFA8D8;
+    color: #353434;
+}
+
+/* Список коментарів */
+.comments-section {
+    flex-grow: 1;
+    overflow-y: auto; /* Дозволяє скролити коментарі, якщо їх багато */
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+.comment-item {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.comment-item strong {
+    color: #353434;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.comment-item p {
+    margin: 0;
+    color: #6B6B6B;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+}
+
+/* Заголовок в секції коментарів */
+.comments-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #353434;
+    font-weight: 500;
+}
+
+/* Поле введення */
+.comment-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#commentText {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #D4C9E0;
+    border-radius: 6px;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+    font-size: 14px;
+    color: #353434;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.3s ease;
+}
+
+#commentText:focus {
+    outline: none;
+    border-color: #9B8DB8;
+    background-color: #F5F0FA;
+}
+
+#commentText::placeholder {
+    color: #bbb;
+}
+
+.btn-send {
+    background-color: #D4C9E0;
+    color: #353434;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+    transition: background-color 0.3s ease;
+}
+
+.btn-send:hover {
+    background-color: #BFA8D8;
 }

@@ -1,2 +1,0 @@
-# SHOTDROP
-website for photographer

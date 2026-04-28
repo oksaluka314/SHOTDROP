@@ -10,15 +10,15 @@
 
 <div class="page-wrapper">
     <div class="header-minimal">
-        <a href="index.html" class="logo-link">SHOTDROP</a>
+        <a href="index.html" class="logo">SHOTDROP</a>
     </div>
 
     <div class="login-box">
         <h1>Вхід для фотографів</h1>
         
         <div class="tabs">
-            <div class="tab active" data-tab="login">Вхід</div>
-            <div class="tab" data-tab="register">Реєстрація</div>
+            <div class="tab active" data-tab="login" style="cursor: pointer;">Вхід</div>
+            <div class="tab" data-tab="register" style="cursor: pointer;">Реєстрація</div>
         </div>
         
         <!-- Login Form -->
@@ -63,12 +63,16 @@
             </div>
             
             <button type="submit" class="btn-login">Зареєструватися</button>
+            
+            <div class="form-footer">
+                <a href="#" class="forgot-password">Уже маєте акаунт?</a>
+            </div>
         </form>
     </div>
 </div>
 
 <script>
-    // Tab switching
+    // Tab switching logic (also in script.js but keep here for reference)
     const tabs = document.querySelectorAll('.tab');
     const forms = document.querySelectorAll('.tab-content');
     
@@ -87,30 +91,8 @@
             document.getElementById(tabName + '-form').classList.add('active');
         });
     });
-    
-    // Handle form submissions
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically send data to your backend
-        alert('Увійти: ' + document.getElementById('login-email').value);
-        window.location.href = 'dashboard.html';
-    });
-    
-    document.getElementById('register-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const password = document.getElementById('register-password').value;
-        const confirm = document.getElementById('register-confirm').value;
-        
-        if(password !== confirm) {
-            alert('Паролі не співпадають!');
-            return;
-        }
-        
-        // Here you would typically send data to your backend
-        alert('Реєстрація: ' + document.getElementById('register-email').value);
-        window.location.href = 'dashboard.html';
-    });
 </script>
+
 
 </body>
 </html>

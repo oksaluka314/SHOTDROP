@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мої галереї | SHOTDROP</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap">
+
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
-
-<div class="sidebar">
+<div class="dashboard">
+<aside class="sidebar">
     <div class="logo"><a href="index.html">SHOTDROP</a></div>
     <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">Мої проєкти</a>
-        <a href="#" class="nav-item">Клієнти</a>
-        <a href="#" class="nav-item">Тарифний план</a>
-        <a href="#" class="nav-item">Налаштування</a>
+        <a href="#" class="nav-item active" data-page="projects">Мої проєкти</a>
+        <a href="#" class="nav-item" data-page="clients">Клієнти</a>
+        <a href="#" class="nav-item" data-page="pricing">Тарифний план</a>
+        <a href="#" class="nav-item" data-page="settings">Налаштування</a>
+        <a href="#" class="nav-item" id="logout-btn" style="color: #000000; margin-top: 20px;">Вихід</a>
     </nav>
-    <div class="sidebar-footer">Beta v.1.0</div>
-</div>
+</aside>
 
 <div class="main">
     <div class="header-dash">
@@ -30,7 +29,7 @@
     <div class="project-grid">
         <div class="project-card">
             <div class="project-thumb">
-                <a href="private-gallery.html"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=400" alt=""></a>
+                <a href="private-gallery.html"><img src="https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg" alt=""></a>
                 <span class="project-status">Активна</span>
             </div>
             <div class="project-info">
@@ -43,10 +42,10 @@
         </div>
         <div class="project-card">
             <div>
-                 <img  src="https://images.unsplash.com/photo-1502033006978-dce57c760004?auto=format&fit=crop&q=80&w=400" alt="">
+                 <img  src="https://i.pinimg.com/736x/2d/a6/cf/2da6cf66094eb064216d51334b14f095.jpg" alt="">
             </div>
             <div class="project-info">
-                <h3>Інтер'єрна зйомка (Kyiv Loft)</h3>
+                <h3>Інтер'єрна зйомка </h3>
                 <div class="project-stats">
                     <span>45 фото</span>
                     <span>0 відібрано</span>
@@ -55,6 +54,6 @@
         </div>
     </div>
 </div>
-
+</div>
 </body>
 </html>
