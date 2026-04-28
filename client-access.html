@@ -11,12 +11,20 @@
 <div class="access-container">
   <div class="logo">SHOTDROP</div>
   <h2>Введіть код доступу</h2>
-  <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Ваш фотограф мав надіслати вам унікальний код у форматі XXX-XXX</p>
-  <form action="client-access.html">
-    <input type="text" placeholder="000-000" required>
+  <p class="access-description">Ваш фотограф мав надіслати вам унікальний код у форматі XXX-XXX</p>
+  
+  <form class="access-form">
+    <div class="form-group">
+      <label for="access-code">Код доступу:</label>
+      <input type="text" id="access-code" class="form-input" placeholder="000-000" required>
+    </div>
+  
     <button type="submit" class="btn-submit">Переглянути фото</button>
   </form>
-  <a href="index.html">← На головну</a>
+  
+  <div class="access-footer">
+    <a href="index.html" class="back-link">← На головну</a>
+  </div>
 </div>
 
 </body>

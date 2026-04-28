@@ -2,26 +2,115 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід для фотографів | SHOTDROP</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-<div class="logo"><a href="index.html">SHOTDROP</a></div>
-<div class="login-box">
-    <div class="tabs">
-        <div class="tab active">Вхід</div>
-        <div class="tab">Реєстрація</div>
+
+<div class="page-wrapper">
+    <div class="header-minimal">
+        <a href="index.html" class="logo-link">SHOTDROP</a>
     </div>
-    <form action="dashboard.html">
-        <label style="font-size: 12px; text-transform: uppercase; font-weight: 700;">Email</label>
-        <input type="email" placeholder="your@email.com" required>
-        <label style="font-size: 12px; text-transform: uppercase; font-weight: 700;">Пароль</label>
-        <input type="password" placeholder="********" required>
-        <button type="submit" class="btn-login">Увійти в кабінет</button>
-    </form>
-    <p><a href="#">Забули пароль?</a></p>
+
+    <div class="login-box">
+        <h1>Вхід для фотографів</h1>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="login">Вхід</div>
+            <div class="tab" data-tab="register">Реєстрація</div>
+        </div>
+        
+        <!-- Login Form -->
+        <form id="login-form" class="tab-content active">
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">Пароль:</label>
+                <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Увійти в кабінет</button>
+            
+            <div class="form-footer">
+                <a href="#" class="forgot-password">Забули пароль?</a>
+            </div>
+        </form>
+        
+        <!-- Registration Form -->
+        <form id="register-form" class="tab-content">
+            <div class="form-group">
+                <label for="register-name">Ім'я:</label>
+                <input type="text" id="register-name" class="form-input" placeholder="Ваше ім'я" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-password">Пароль:</label>
+                <input type="password" id="register-password" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-confirm">Підтвердіть пароль:</label>
+                <input type="password" id="register-confirm" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Зареєструватися</button>
+        </form>
+    </div>
 </div>
+
+<script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab');
+    const forms = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            
+            // Remove active class from all tabs and forms
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show corresponding form
+            document.getElementById(tabName + '-form').classList.add('active');
+        });
+    });
+    
+    // Handle form submissions
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send data to your backend
+        alert('Увійти: ' + document.getElementById('login-email').value);
+        window.location.href = 'dashboard.html';
+    });
+    
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const password = document.getElementById('register-password').value;
+        const confirm = document.getElementById('register-confirm').value;
+        
+        if(password !== confirm) {
+            alert('Паролі не співпадають!');
+            return;
+        }
+        
+        // Here you would typically send data to your backend
+        alert('Реєстрація: ' + document.getElementById('register-email').value);
+        window.location.href = 'dashboard.html';
+    });
+</script>
 
 </body>
 </html>

@@ -1,11 +1,15 @@
-/* General Styles */
+/* ================================================================
+   ЗАГАЛЬНІ СТИЛІ (застосовуються до всіх сторінок)
+   ================================================================ */
+
+/* General Styles - Body & Links */
 body {
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: #333;
-    background-color: #fce4ec;
+    color: #353434;
+    background-color: #FAFAF8;
 }
 
 a {
@@ -15,41 +19,30 @@ a {
 
 /* Image Styles */
 img {
-    width: 300px;
-    height: 250px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     object-fit: cover;
     display: block;
 }
 
-.portfolio-preview img {
-    width: 100%;
-    height: 250px;
-}
-
-.photo-card img {
-    width: 100%;
-    height: 300px;
-}
-
-.project-card img {
-    width: 100%;
-    height: 200px;
-}
-
-/* Header Styles */
+/* Header Styles - всі сторінки */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    background-color: #f8bbd9;
+    padding: 1.5%;
+    background-color: #9B8DB8;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logo {
     font-weight: 700;
     font-size: 24px;
-    color: #e91e63;
+    color: #FFFFFF;
     left: 30px;
 }
 
@@ -65,18 +58,82 @@ img {
 }
 
 .nav-item {
-    margin-left: 20px;
+   
+    min-width: 180px;
+    text-align: center;
+}
+
+.nav-item:hover {
+    color: #E8DFE8;
 }
 
 .nav-link {
     margin-right: 20px;
 }
 
-/* Sidebar Styles for Dashboard */
+/* Footer Styles - всі сторінки */
+footer {
+    background-color: #9B8DB8;
+    color: white;
+    text-align: center;
+    padding: 2%;
+}
+
+/* Buttons - всі сторінки */
+.btn-client, .btn-submit, .btn-login, .btn-add, .btn-download-all {
+    background-color: #D4C9E0;
+    color: #353434;
+    padding: 5% 5%;
+    margin-top: 1%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-client:hover, .btn-submit:hover, .btn-login:hover, .btn-add:hover, .btn-download-all:hover, .cta-main:hover {
+    background-color: #BFA8D8;
+}
+
+/* Sections - всі сторінки */
+section {
+    padding: 4% 2%;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+/* Table Styles - всі сторінки */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1%;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #E8DFE8;
+}
+
+/* Main Content */
+.main {
+    flex: 1;
+    padding: 2%;
+}
+
+
+/* ================================================================
+   DASHBOARD.HTML - Панель керування фотографа
+   ================================================================ */
+
+/* Sidebar Styles */
 .sidebar {
-    width: 250px;
-    background-color: #fce4ec;
-    padding: 20px;
+    width: 20%;
+    background-color: #FAFAF8;
+    padding: 2%;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -85,16 +142,16 @@ img {
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 4%;
 }
 
 .nav-item {
-    padding: 10px 0;
-    color: #333;
+    padding: 1% 0;
+    color: #353434;
 }
 
 .nav-item.active {
-    color: #e91e63;
+    color: #BFA8D8;
     font-weight: 500;
 }
 
@@ -104,109 +161,289 @@ img {
     color: #666;
 }
 
-/* Main Content */
-.main {
-    flex: 1;
-    padding: 20px;
+/* Project Grid */
+.project-grid {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-/* Buttons */
-.btn-client, .btn-submit, .btn-login, .btn-add, .btn-download-all {
-    background-color: #f06292;
-    color: white;
-    padding: 10px 20px;
-    border: none;
+.project-card {
+    width: 30%;
+    margin: 2%;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
+    overflow: hidden;
 }
 
-.btn-client:hover, .btn-submit:hover, .btn-login:hover, .btn-add:hover, .btn-download-all:hover {
-    background-color: #e91e63;
+.project-card img {
+    width: 100%;
+    height: 200px;
 }
 
-.cta-main {
-    background-color: #e91e63;
+.project-thumb {
+    position: relative;
+}
+
+.project-status {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    background-color: #BFA8D8;
     color: white;
-    padding: 15px 30px;
+    padding: 0.5% 1%;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.project-info {
+    padding: 1.5%;
+}
+
+.project-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+    font-size: 14px;
+    color: #6B6B6B;
+}
+
+
+/* ================================================================
+   INDEX.HTML - Головна сторінка
+   ================================================================ */
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0px;
+    padding: 6% 2%;
+    background-image: url('https://i.pinimg.com/1200x/71/e5/65/71e565e6e651014298cfa1044493b2ac.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+.cta-main {
+    background-color: #D4C9E0;
+    color: #353434;
+    padding: 1.5% 3%;
     border-radius: 5px;
     font-weight: 700;
-}
-
-/* Sections */
-section {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .portfolio-preview {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 2%;
 }
 
 .portfolio-preview > div {
     text-align: center;
-    max-width: 300px;
+    max-width: 30%;
 }
 
-/* Table Styles */
-table {
+.portfolio-preview img {
     width: 100%;
-    border-collapse: collapse;
+    height: 250px;
 }
 
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+/* ================================================================
+   ACCOUNT.HTML & CLIENT-ACCESS.HTML - Сторінки входу
+   ================================================================ */
+
+/* Page Wrapper */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-th {
-    background-color: #fce4ec;
+.header-minimal {
+    padding: 2% 3%;
+    background-color: #9B8DB8;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Footer */
-footer {
-    background-color: #ad1457;
-    color: white;
-    text-align: center;
-    padding: 20px;
+.logo-link {
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
 }
 
-/* Access Container */
+/* Access Container - для client-access.html */
 .access-container {
-    max-width: 400px;
-    margin: 100px auto;
+    max-width: 90%;
+    margin: 8% auto;
+    padding: 4%;
     text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Login Box */
+.access-container .logo {
+    margin-bottom: 3%;
+    font-size: 28px;
+}
+
+.access-container h2 {
+    color: #9B8DB8;
+    margin-bottom: 1.5%;
+    font-size: 24px;
+}
+
+.access-description {
+    font-size: 14px;
+    color: #6B6B6B;
+    margin-bottom: 3%;
+    line-height: 1.5;
+}
+
+/* Login Box - для account.html */
 .login-box {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    max-width: 90%;
+    margin: 3% auto;
+    padding: 2%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+.login-box h1 {
+    text-align: center;
+    color: #9B8DB8;
+    margin: 0.5%;
+    font-size: 24px;
+}
+
+/* Form Styles */
+.access-form,
+.tab-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8%;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #5A5A5A;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1.2% 1.5%;
+    font-size: 14px;
+    border: 2px solid #D4C9E0;
+    border-radius: 5px;
+    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #9B8DB8;
+    background-color: #F5F0FA;
+}
+
+.form-input::placeholder {
+    color: #bbb;
+}
+
+.access-footer {
+    margin-top: 2.5%;
+    padding-top: 2%;
+    border-top: 1px solid #f0f0f0;
+}
+
+.back-link {
+    color: #9B8DB8;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #7A6A95;
+    text-decoration: underline;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 1.5%;
+    padding-top: 1.5%;
+    border-top: 1px solid #f0f0f0;
+}
+
+.forgot-password {
+    color: #9B8DB8;
+    font-size: 13px;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #7A6A95;
+}
+
+/* Tabs - для форм входу */
 .tabs {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 3%;
+    gap: 0;
+    border-bottom: 2px solid #D4C9E0;
 }
 
 .tab {
     flex: 1;
-    padding: 10px;
+    padding: 1.5%;
     text-align: center;
+    font-weight: 500;
+    color: #ABABAB;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    margin-bottom: -0.2%;
     cursor: pointer;
 }
 
-.tab.active {
-    background-color: #e91e63;
-    color: white;
+.tab:hover {
+    color: #BFA8D8;
 }
+
+.tab.active {
+    color: #9B8DB8;
+    border-bottom-color: #9B8DB8;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* ================================================================
+   PHOTO-VIEW.HTML & PRIVATE-GALLERY.HTML - Галереї фотографій
+   ================================================================ */
 
 /* Gallery Info */
 .gallery-info {
@@ -217,13 +454,18 @@ footer {
 .photo-card {
     position: relative;
     display: inline-block;
-    margin: 10px;
+    margin: 1%;
+}
+
+.photo-card img {
+    width: 100%;
+    height: 300px;
 }
 
 .photo-overlay {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1%;
+    right: 1%;
     display: flex;
     flex-direction: column;
 }
@@ -231,51 +473,11 @@ footer {
 .icon-badge {
     background-color: rgba(255,255,255,0.8);
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 3%;
+    height: auto;
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 5px;
-}
-
-/* Project Grid */
-.project-grid {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.project-card {
-    width: 300px;
-    margin: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.project-thumb {
-    position: relative;
-}
-
-.project-status {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #e91e63;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-size: 12px;
-}
-
-.project-info {
-    padding: 15px;
-}
-
-.project-stats {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #666;
+    margin-bottom: 0.5%;
 }
