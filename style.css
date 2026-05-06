@@ -124,6 +124,18 @@ footer {
     background-color: var(--button-hover);
 }
 
+button:disabled,
+.btn-client:disabled,
+.btn-submit:disabled,
+.btn-login:disabled,
+.btn-add:disabled,
+.btn-download-all:disabled,
+.btn-like:disabled,
+.btn-send:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
 /* Sections - всі сторінки */
 section {
     padding: 4% 2%;

@@ -12,6 +12,7 @@ app.use(express.static(__dirname));
 let usersDB = [];
 let galleriesDB = [];
 let mongoConnected = false;
+let mongoConnectionPromise = null;
 
 galleriesDB = [
     {
@@ -69,16 +70,30 @@ async function connectMongo() {
         return true;
     }
 
+    if (mongoConnectionPromise) {
+        try {
+            await mongoConnectionPromise;
+            mongoConnected = mongoose.connection.readyState === 1;
+            return mongoConnected;
+        } catch (err) {
+            mongoConnectionPromise = null;
+            mongoConnected = false;
+            return false;
+        }
+    }
+
     try {
-        await mongoose.connect(process.env.MONGODB_URI, {
+        mongoConnectionPromise = mongoose.connect(process.env.MONGODB_URI, {
             serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
             retryWrites: true,
             w: 'majority'
         });
+        await mongoConnectionPromise;
         mongoConnected = true;
         return true;
     } catch (err) {
+        mongoConnectionPromise = null;
         mongoConnected = false;
         console.log('MongoDB недоступна, використовується In-Memory база:', err.message);
         return false;

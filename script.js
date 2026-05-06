@@ -3,6 +3,7 @@
 // API CONFIGURATION
 // ============================================
 const API_BASE = '/api';
+const IS_LOCAL_DEV = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
 console.log('Адреса API:', API_BASE);
 
@@ -18,7 +19,9 @@ async function checkServerHealth() {
     }
 }
 
-checkServerHealth();
+if (IS_LOCAL_DEV) {
+    checkServerHealth();
+}
 
 // ============================================
 // STORAGE MANAGER - localStorage helpers
@@ -521,8 +524,7 @@ class GalleryManager {
             return userGalleries;
         } catch (err) {
             console.error('Помилка завантаження галерей:', err);
-            alert('Не вдалося завантажити галереї з сервера.');
-            return [];
+            return this.getCachedUserGalleries();
         }
     }
 
@@ -640,11 +642,18 @@ class DashboardManager {
     }
 
     static async renderGalleries() {
-        const galleries = await GalleryManager.getUserGalleries();
         const projectGrid = document.querySelector('.project-grid');
 
         if (!projectGrid) return;
 
+        const cachedGalleries = GalleryManager.getCachedUserGalleries();
+        this.renderGalleryCards(projectGrid, cachedGalleries);
+
+        const galleries = await GalleryManager.getUserGalleries();
+        this.renderGalleryCards(projectGrid, galleries);
+    }
+
+    static renderGalleryCards(projectGrid, galleries) {
         projectGrid.innerHTML = '';
 
         galleries.forEach(gallery => {
@@ -653,7 +662,7 @@ class DashboardManager {
             card.innerHTML = `
                 <div class="project-thumb">
                     <a href="private-gallery.html?code=${gallery.code}">
-                        <img src="${gallery.photos?.[0]?.url || 'https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg'}" alt="">
+                        <img src="${gallery.photos?.[0]?.url || 'https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg'}" alt="" loading="lazy">
                     </a>
                     <span class="project-status">Активна</span>
                 </div>
@@ -684,6 +693,7 @@ class DashboardManager {
     }
 
     static async createNewGallery() {
+        const addBtn = document.querySelector('.btn-add');
         const name = prompt('Введіть назву нової зйомки:');
         if (!name) return;
 
@@ -691,7 +701,9 @@ class DashboardManager {
         if (!photoCountStr) return;
 
         const photoCount = parseInt(photoCountStr) || 20;
+        if (addBtn) addBtn.disabled = true;
         const gallery = await GalleryManager.createGallery(name, photoCount);
+        if (addBtn) addBtn.disabled = false;
         
         if (gallery) {
             alert(`Нова галерея створена!\n\nКод доступу: ${gallery.code}\n\nПоділіться цим кодом з клієнтом.`);
@@ -716,11 +728,14 @@ class ClientAccessManager {
 
     static async handleAccessCode() {
         const codeInput = document.getElementById('access-code');
+        const submitBtn = document.querySelector('.access-form button[type="submit"], .access-form .btn-submit');
         const code = codeInput.value.trim().toUpperCase();
 
         console.log('Пошук галереї за кодом:', code);
 
+        if (submitBtn) submitBtn.disabled = true;
         const gallery = await GalleryManager.getGalleryByCode(code);
+        if (submitBtn) submitBtn.disabled = false;
         if (gallery) {
             console.log('Галерею знайдено на сервері');
             sessionStorage.setItem('gallery_code', code);
@@ -754,12 +769,19 @@ class PrivateGalleryManager {
             return;
         }
 
+        const cachedGallery = GalleryManager.getCachedGalleryByCode(code);
+        if (cachedGallery) {
+            this.currentGallery = cachedGallery;
+            this.displayGallery(cachedGallery);
+            sessionStorage.setItem('gallery_code', code);
+        }
+
         const gallery = await GalleryManager.getGalleryByCode(code);
         if (gallery) {
             this.currentGallery = gallery;
             this.displayGallery(gallery);
             sessionStorage.setItem('gallery_code', code);
-        } else {
+        } else if (!cachedGallery) {
             alert('Галерею не знайдено за цим кодом!');
         }
     }
@@ -790,7 +812,7 @@ class PrivateGalleryManager {
             photoCard.className = 'photo-card';
             photoCard.type = 'button';
             photoCard.innerHTML = `
-                <img src="${photo.url}" alt="">
+                <img src="${photo.url}" alt="" loading="lazy">
                 <div class="photo-overlay">
                     <div class="icon-badge ${state.liked ? 'active' : ''}">❤️</div>
                     <div class="icon-badge">${state.comments.length ? state.comments.length : '💬'}</div>
@@ -881,29 +903,75 @@ class PrivateGalleryManager {
     static async toggleCurrentPhotoLike() {
         if (!this.currentGallery || !this.currentPhoto) return;
 
-        const state = GalleryManager.getPhotoState(this.currentGallery.code, this.currentPhoto.id);
-        state.liked = !state.liked;
-        this.currentGallery = await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
+        const likeBtn = document.getElementById('likeBtn');
+        const previousState = { ...GalleryManager.getPhotoState(this.currentGallery.code, this.currentPhoto.id) };
+        const nextState = {
+            ...previousState,
+            liked: !previousState.liked
+        };
+
+        if (likeBtn) likeBtn.disabled = true;
+
+        const savePromise = GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, nextState);
+        this.currentGallery = GalleryManager.getCachedGalleryByCode(this.currentGallery.code) || this.currentGallery;
         this.renderPhotoActions();
         this.displayGallery(this.currentGallery);
+
+        try {
+            this.currentGallery = await savePromise;
+            this.renderPhotoActions();
+            this.displayGallery(this.currentGallery);
+        } catch (err) {
+            console.error('Не вдалося зберегти вибір фото:', err);
+            await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, previousState).catch(() => {});
+            this.currentGallery = GalleryManager.getCachedGalleryByCode(this.currentGallery.code) || this.currentGallery;
+            this.renderPhotoActions();
+            this.displayGallery(this.currentGallery);
+            alert('Не вдалося зберегти вибір фото. Спробуйте ще раз.');
+        } finally {
+            if (likeBtn) likeBtn.disabled = false;
+        }
     }
 
     static async addCurrentPhotoComment() {
         if (!this.currentGallery || !this.currentPhoto) return;
 
         const commentText = document.getElementById('commentText');
+        const sendBtn = document.querySelector('.btn-send');
         const text = commentText.value.trim();
         if (!text) return;
 
-        const state = GalleryManager.getPhotoState(this.currentGallery.code, this.currentPhoto.id);
-        state.comments.push({
+        const previousState = GalleryManager.getPhotoState(this.currentGallery.code, this.currentPhoto.id);
+        const nextState = {
+            ...previousState,
+            comments: [...(previousState.comments || [])]
+        };
+        nextState.comments.push({
             author: 'Клієнт',
             text,
             createdAt: new Date().toISOString()
         });
 
-        this.currentGallery = await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
+        if (sendBtn) sendBtn.disabled = true;
         commentText.value = '';
+
+        const savePromise = GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, nextState);
+        this.currentGallery = GalleryManager.getCachedGalleryByCode(this.currentGallery.code) || this.currentGallery;
+        this.renderPhotoActions();
+        this.displayGallery(this.currentGallery);
+
+        try {
+            this.currentGallery = await savePromise;
+        } catch (err) {
+            console.error('Не вдалося зберегти коментар:', err);
+            await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, previousState).catch(() => {});
+            this.currentGallery = GalleryManager.getCachedGalleryByCode(this.currentGallery.code) || this.currentGallery;
+            commentText.value = text;
+            alert('Не вдалося зберегти коментар. Спробуйте ще раз.');
+        } finally {
+            if (sendBtn) sendBtn.disabled = false;
+        }
+
         this.renderPhotoActions();
         this.displayGallery(this.currentGallery);
     }
