@@ -1,4 +1,38 @@
 /* ================================================================
+   ТЕМНІ/СВІТЛІ ТЕМИ - CSS ЗМІННІ
+   ================================================================ */
+:root {
+    /* Light theme */
+    --primary-bg: #FAFAF8;
+    --secondary-bg: #FFFFFF;
+    --primary-text: #353434;
+    --secondary-text: #6B6B6B;
+    --header-bg: #9B8DB8;
+    --header-hover: #E8DFE8;
+    --button-bg: #D4C9E0;
+    --button-hover: #BFA8D8;
+    --border-color: #ddd;
+    --shadow-color: rgba(0,0,0,0.1);
+    --card-border: #E8DFE8;
+}
+
+[data-theme="dark"] {
+    --primary-bg:    #1e1429;
+    --secondary-bg:  #2a1d3a;
+    --primary-text:  #ede7f6;
+    --secondary-text: #a794c1;
+    
+    --header-bg:     #251933;
+    --header-hover:  #36254a;
+    
+    --button-bg:     #9d50bb;
+    --button-hover:  #b366d4;
+    
+    --border-color:  #3d2b52;
+    --shadow-color:  rgba(0, 0, 0, 0.5);
+    --card-border:   #4a3563;
+}
+/* ================================================================
    ЗАГАЛЬНІ СТИЛІ (застосовуються до всіх сторінок)
    ================================================================ */
 
@@ -8,35 +42,36 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: #353434;
-    background-color: #FAFAF8;
+    color: var(--primary-text);
+    background-color: var(--primary-bg);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 /* Image Styles */
 img {
-    width: 100%;
     max-width: 100%;
     height: auto;
     object-fit: cover;
     display: block;
 }
 
-/* Header Styles - всі сторінки */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5%;
-    background-color: #9B8DB8;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--header-bg);
+    box-shadow: 0 2px 4px var(--shadow-color);
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: background-color 0.3s ease;
 }
 
 .logo {
@@ -58,40 +93,35 @@ img {
 }
 
 .nav-item {
-
     min-width: 180px;
     text-align: center;
 }
 
 .nav-item:hover {
-    color: #E8DFE8;
+    color: var(--header-hover);
 }
 
-.nav-link {
-    margin-right: 20px;
-}
-
-/* Footer Styles - всі сторінки */
 footer {
-    background-color: #9B8DB8;
-    color: white;
+    background-color: var(--header-bg);
+    color: var(--primary-text);
     text-align: center;
     padding: 2%;
+    transition: background-color 0.3s ease;
 }
 
-/* Buttons - всі сторінки */
 .btn-client, .btn-submit, .btn-login, .btn-add, .btn-download-all {
-    background-color: #D4C9E0;
-    color: #353434;
+    background-color: var(--button-bg);
+    color: var(--primary-text);
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
 .btn-client:hover, .btn-submit:hover, .btn-login:hover, .btn-add:hover, .btn-download-all:hover, .cta-main:hover {
-    background-color: #BFA8D8;
+    background-color: var(--button-hover);
 }
 
 /* Sections - всі сторінки */
@@ -108,12 +138,13 @@ table {
 
 th, td {
     padding: 1%;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     text-align: left;
 }
 
 th {
-    background-color: #E8DFE8;
+    background-color: var(--button-bg);
+    color: var(--primary-text);
 }
 
 /* ================================================================
@@ -123,15 +154,12 @@ th {
 /* Sidebar Styles */
 .sidebar {
     width: 20%;
-    background-color:#9B8DB8;
+    background-color: var(--header-bg);
     padding: 2%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-.logo::first-child {
-    background-color: #9B8DB8;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar-nav {
@@ -142,11 +170,12 @@ th {
 
 .nav-item {
     padding: 1% 0;
-    color: #353434;
+    color: var(--secondary-text);
+    transition: color 0.3s ease;
 }
 
 .nav-item.active {
-    color: #FFFFFF;
+    color: var(--header-hover);
     font-weight: 500;
 }
 
@@ -167,9 +196,11 @@ th {
 .project-card {
     width: 30%;
     margin: 2%;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     overflow: hidden;
+    background-color: var(--secondary-bg);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .project-card img {
@@ -185,7 +216,7 @@ th {
     position: absolute;
     top: 1%;
     left: 1%;
-    background-color: #BFA8D8;
+    background-color: var(--button-hover);
     color: white;
     padding: 0.5% 1%;
     border-radius: 3px;
@@ -201,15 +232,14 @@ th {
     justify-content: space-between;
     margin-top: 1%;
     font-size: 14px;
-    color: #6B6B6B;
+    color: var(--secondary-text);
 }
 
 .gallery-info {
     margin: 0%;
     font-size: 24px;
     font-weight: 700;
-    color:#353434;
-  
+    color: var(--primary-text);
 }
 
 /* ================================================================
@@ -225,14 +255,15 @@ th {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-  
 }
+
 .cta-main {
-    background-color: #D4C9E0;
-    color: #353434;
+    background-color: var(--button-bg);
+    color: var(--primary-text);
     padding: 1.5% 3%;
     border-radius: 5px;
     font-weight: 700;
+    transition: background-color 0.3s ease;
 }
 
 .portfolio-preview {
@@ -264,7 +295,7 @@ th {
 
 .header-minimal {
     padding: 1% 2%;
-    background-color: #9B8DB8;
+    background-color: var(--header-bg);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
@@ -279,9 +310,10 @@ th {
     margin: 2% auto;
     padding: 4%;
     text-align: center;
-    background-color: white;
+    background-color: var(--secondary-bg);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color 0.3s ease;
 }
 
 .access-container .logo {
@@ -290,14 +322,14 @@ th {
 }
 
 .access-container h2 {
-    color: #9B8DB8;
+    color: var(--secondary-text--);
     margin-bottom: 1.5%;
     font-size: 24px;
 }
 
 .access-description {
     font-size: 14px;
-    color: #6B6B6B;
+    color: var(--secondary-text);
     margin-bottom: 3%;
 }
 
@@ -306,16 +338,39 @@ th {
     width: 55%;
     margin: 2% auto;
     padding: 4%;
-    background-color: white;
+    background-color: var(--secondary-bg);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color 0.3s ease;
 }
 
 .login-box h1 {
     text-align: center;
-    color: #9B8DB8;
+    color: var(--secondary-text--);
     margin: 0.5%;
     font-size: 24px;
+}
+
+/* Theme Switcher Button */
+.theme-btn {
+    background: none;
+    border: 2px solid var(--button-bg);
+    color: var(--primary-text);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+}
+
+.theme-btn:hover {
+    background-color: var(--button-bg);
+    transform: scale(1.1);
 }
 
 /* Form Styles */
@@ -335,7 +390,7 @@ th {
 
 .form-group label {
     font-weight: 500;
-    color: #5A5A5A;
+    color: var(--secondary-text);
     font-size: 14px;
 }
 
@@ -344,37 +399,40 @@ th {
     padding: 1.2% 1.5%;
     margin-bottom: 1.5%;
     font-size: 14px;
-    border: 2px solid #D4C9E0;
+    border: 2px solid var(--border-color);
     border-radius: 5px;
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
     box-sizing: border-box;
+    background-color: var(--secondary-bg);
+    color: var(--primary-text);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .form-input:focus {
     outline: none;
-    border-color: #9B8DB8;
-    background-color: #F5F0FA;
+    border-color: var(--button-hover);
+    background-color: var(--secondary-bg);
 }
 
 .form-input::placeholder {
-    color: #bbb;
+    color: var(--secondary-text);
+    opacity: 0.6;
 }
 
 .access-footer {
     margin-top: 2.5%;
     padding-top: 2%;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--border-color);
 }
 
 .back-link {
-    color: #9B8DB8;
+    color: var(--button-bg);
     font-size: 14px;
     transition: color 0.3s ease;
 }
 
 .back-link:hover {
-    color: #7A6A95;
+    color: var(--button-hover);
     text-decoration: underline;
 }
 
@@ -382,17 +440,17 @@ th {
     text-align: center;
     margin-top: 1.5%;
     padding-top: 1.5%;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--border-color);
 }
 
 .forgot-password {
-    color: #9B8DB8;
+    color: var(--button-bg);
     font-size: 13px;
     transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
-    color: #7A6A95;
+    color: var(--button-hover);
 }
 
 /* Tabs - для форм входу */
@@ -400,7 +458,7 @@ th {
     display: flex;
     margin-bottom: 3%;
     gap: 0;
-    border-bottom: 2px solid #D4C9E0;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .tab {
@@ -408,20 +466,20 @@ th {
     padding: 1.5%;
     text-align: center;
     font-weight: 500;
-    color: #ABABAB;
+    color: var(--secondary-text);
     border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
     margin-bottom: -0.2%;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .tab:hover {
-    color: #BFA8D8;
+    color: var(--button-hover);
 }
 
 .tab.active {
-    color: #9B8DB8;
-    border-bottom-color: #9B8DB8;
+    color: var(--button-bg);
+    border-bottom-color: var(--button-bg);
 }
 
 .tab-content {
@@ -430,18 +488,7 @@ th {
 
 .tab-content.active {
     display: block;
-    animation: fadeIn 0.3s ease;
 }
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 
 /* ================================================================
    PHOTO-VIEW.HTML & PRIVATE-GALLERY.HTML - Галереї фотографій
@@ -486,10 +533,6 @@ th {
 
 .modal {
     display: flex;
-    margin-top: 2.5%;
-    margin-left: 15%;
-    width: 70%;
-    height: 80%;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -498,16 +541,57 @@ th {
     border: 1px solid #eee;
 }
 
+.photo-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 70%;
+    height: 80%;
+    padding: 4px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.72);
+    border: 0;
+    border-radius: 5px;
+    top: 10%;
+    left: 15%;
+    z-index: 5000;
+}
+
+.photo-popup.active {
+    display: flex;
+}
+
+.photo-popup .modal-image-side,
+.photo-popup .modal-sidebar {
+    height: 100%;
+}
+
+.photo-popup > .modal-image-side,
+.photo-popup > .modal-sidebar {
+    max-height: 88vh;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
 /* Кнопка закриття */
 .close-modal {
     position: absolute;
-    top: 2px;
-    right: 10px;
+    top: 10px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
     font-size: 30px;
+    line-height: 1;
     cursor: pointer;
-    z-index: 10;
+    z-index: 5010;
     color: #333;
-    transition: color 0.3s;
 }
 
 .close-modal:hover {
@@ -554,7 +638,6 @@ th {
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
     border-radius: 6px;
 }
 
@@ -595,7 +678,6 @@ th {
 /* Заголовок в секції коментарів */
 .comments-title {
     font-size: 14px;
-    text-transform: uppercase;
     margin-bottom: 20px;
     color: #353434;
     font-weight: 500;
@@ -618,7 +700,6 @@ th {
     color: #353434;
     resize: vertical;
     min-height: 100px;
-    transition: border-color 0.3s ease;
 }
 
 #commentText:focus {
@@ -640,9 +721,33 @@ th {
     cursor: pointer;
     font-weight: 500;
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-    transition: background-color 0.3s ease;
 }
 
 .btn-send:hover {
     background-color: #BFA8D8;
+}
+
+@media (max-width: 760px) {
+    .photo-popup {
+        flex-direction: column;
+        padding: 64px 12px 12px;
+        overflow-y: auto;
+    }
+
+    .photo-popup > .modal-image-side,
+    .photo-popup > .modal-sidebar {
+        width: 100%;
+        max-height: none;
+    }
+
+    .modal-image-side {
+        min-height: 45vh;
+        flex: none;
+    }
+
+    .modal-sidebar {
+        flex: none;
+        box-sizing: border-box;
+        border-left: 0;
+    }
 }
