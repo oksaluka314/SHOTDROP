@@ -2,7 +2,7 @@
 // ============================================
 // API CONFIGURATION
 // ============================================
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 
 console.log('Адреса API:', API_BASE);
 
@@ -13,7 +13,7 @@ async function checkServerHealth() {
         console.log('Сервер доступний:', data);
         return true;
     } catch (err) {
-        console.warn('Сервер недоступний. Використовується локальна база:', err.message);
+        console.warn('Сервер недоступний:', err.message);
         return false;
     }
 }
@@ -159,32 +159,8 @@ class AuthManager {
             }
         } catch (err) {
             console.error('Помилка під час реєстрації:', err);
-            
-            // FALLBACK: локальна реєстрація
-            console.log('Використовується локальна реєстрація...');
-            const users = StorageManager.getUsers();
-            const existingUser = users.find(u => u.email === email);
-            
-            if (existingUser) {
-                alert('Цей email вже зареєстрований!');
-                return false;
-            }
-            
-            const newUser = {
-                id: StorageManager.generateUserId(),
-                email,
-                password,
-                role: 'photographer',
-                createdAt: new Date().toISOString()
-            };
-            
-            users.push(newUser);
-            StorageManager.saveUsers(users);
-            StorageManager.setCurrentUser(newUser);
-            
-            alert('Реєстрація успішна!\n\n(Локальна база даних)');
-            window.location.href = 'dashboard.html';
-            return true;
+            alert('Не вдалося зареєструватися на сервері. Перевірте підключення або налаштування API.');
+            return false;
         }
     }
 
@@ -215,21 +191,8 @@ class AuthManager {
             }
         } catch (err) {
             console.error('Помилка під час входу:', err);
-            
-            // FALLBACK: локальний вхід
-            console.log('Використовується локальний вхід...');
-            const users = StorageManager.getUsers();
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (user) {
-                StorageManager.setCurrentUser(user);
-                alert('Вхід успішний!\n\n(Локальна база даних)');
-                window.location.href = 'dashboard.html';
-                return true;
-            } else {
-                alert('Невірний email або пароль');
-                return false;
-            }
+            alert('Не вдалося увійти через сервер. Перевірте підключення або налаштування API.');
+            return false;
         }
     }
 
@@ -269,25 +232,10 @@ class AuthManager {
                 return true;
             }
 
-            const updatedLocally = this.resetLocalPassword(email, password);
-            if (updatedLocally) {
-                alert('Пароль змінено локально. Тепер увійдіть із новим паролем.');
-                this.switchTab('login');
-                return true;
-            }
-
             alert('Помилка: ' + (data.error || 'Не вдалося змінити пароль'));
             return false;
         } catch (err) {
             console.error('Помилка під час скидання пароля:', err);
-            const updatedLocally = this.resetLocalPassword(email, password);
-
-            if (updatedLocally) {
-                alert('Пароль змінено локально. Тепер увійдіть із новим паролем.');
-                this.switchTab('login');
-                return true;
-            }
-
             alert('Не вдалося змінити пароль. Перевірте email або підключення до сервера.');
             return false;
         }
@@ -423,47 +371,24 @@ class GalleryManager {
             console.log('Відповідь сервера:', data);
             
             if (data.success) {
-                const newGallery = {
+                return this.upsertGalleryFromServer(data.gallery || {
                     id: data.galleryId,
                     code: data.accessCode,
-                    name: name,
-                    userId: currentUser.id,
-                    photoCount: photoCount,
+                    name,
+                    photographerId: currentUser.id,
+                    photoCount,
                     selectedPhotos: 0,
-                    createdAt: new Date().toLocaleString('uk-UA'),
-                    photos: this.generateSamplePhotos(photoCount)
-                };
-                
-                const galleries = StorageManager.getGalleries();
-                galleries.push(newGallery);
-                StorageManager.saveGalleries(galleries);
-                
-                return newGallery;
+                    photoStates: {},
+                    createdAt: new Date().toISOString()
+                });
             } else {
                 alert('Помилка на сервері: ' + data.error);
                 throw new Error(data.error);
             }
         } catch (err) {
             console.error('Помилка під час створення галереї на сервері:', err);
-            
-            // FALLBACK: локальне створення
-            console.log('Використовується локальне створення галереї...');
-            const newGallery = {
-                id: StorageManager.generateGalleryId(),
-                code: this.generateAccessCode(),
-                name: name,
-                userId: currentUser.id,
-                photoCount: photoCount,
-                selectedPhotos: 0,
-                createdAt: new Date().toLocaleString('uk-UA'),
-                photos: this.generateSamplePhotos(photoCount)
-            };
-            
-            const galleries = StorageManager.getGalleries();
-            galleries.push(newGallery);
-            StorageManager.saveGalleries(galleries);
-            
-            return newGallery;
+            alert('Не вдалося створити галерею на сервері. Перевірте підключення або налаштування API.');
+            return false;
         }
     }
 
@@ -520,28 +445,47 @@ class GalleryManager {
         return `${galleryCode}::${photoId}`;
     }
 
-    static getPhotoStates() {
-        const states = localStorage.getItem('shotdrop_photo_states');
-        return states ? JSON.parse(states) : {};
+    static getPhotoStates(galleryCode) {
+        const gallery = StorageManager.getGalleries().find(g => g.code === galleryCode);
+        return gallery?.photoStates || {};
     }
 
-    static savePhotoStates(states) {
-        localStorage.setItem('shotdrop_photo_states', JSON.stringify(states));
+    static async savePhotoStates(galleryCode, states) {
+        const galleries = StorageManager.getGalleries();
+        const gallery = galleries.find(g => g.code === galleryCode);
+
+        if (gallery) {
+            gallery.photoStates = states;
+            gallery.selectedPhotos = Object.values(states).filter(state => state?.liked).length;
+            StorageManager.saveGalleries(galleries);
+        }
+
+        const response = await fetch(API_BASE + '/gallery/' + galleryCode + '/photo-states', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ photoStates: states })
+        });
+        const data = await response.json();
+
+        if (data.success && data.gallery) {
+            return this.upsertGalleryFromServer(data.gallery);
+        }
+
+        throw new Error(data.error || 'Не вдалося зберегти стан фото');
     }
 
     static getPhotoState(galleryCode, photoId) {
-        const states = this.getPhotoStates();
+        const states = this.getPhotoStates(galleryCode);
         const key = this.getPhotoStateKey(galleryCode, photoId);
 
         return states[key] || { liked: false, comments: [] };
     }
 
-    static setPhotoState(galleryCode, photoId, state) {
-        const states = this.getPhotoStates();
+    static async setPhotoState(galleryCode, photoId, state) {
+        const states = this.getPhotoStates(galleryCode);
         const key = this.getPhotoStateKey(galleryCode, photoId);
         states[key] = state;
-        this.savePhotoStates(states);
-        this.syncSelectedCount(galleryCode);
+        return this.savePhotoStates(galleryCode, states);
     }
 
     static syncSelectedCount(galleryCode) {
@@ -549,7 +493,7 @@ class GalleryManager {
         const gallery = galleries.find(g => g.code === galleryCode);
         if (!gallery) return;
 
-        const states = this.getPhotoStates();
+        const states = this.getPhotoStates(galleryCode);
         gallery.selectedPhotos = (gallery.photos || []).filter(photo => {
             const key = this.getPhotoStateKey(galleryCode, photo.id);
             return states[key]?.liked;
@@ -558,7 +502,31 @@ class GalleryManager {
         StorageManager.saveGalleries(galleries);
     }
 
-    static getUserGalleries() {
+    static async getUserGalleries() {
+        const currentUser = StorageManager.getCurrentUser();
+        if (!currentUser) return [];
+
+        try {
+            const response = await fetch(API_BASE + '/galleries/' + currentUser.id);
+            const data = await response.json();
+
+            if (!Array.isArray(data)) {
+                throw new Error(data.error || 'Не вдалося завантажити галереї');
+            }
+
+            const userGalleries = data.map(gallery => this.upsertGalleryFromServer(gallery));
+            const otherGalleries = StorageManager.getGalleries()
+                .filter(gallery => gallery.userId !== currentUser.id);
+            StorageManager.saveGalleries([...otherGalleries, ...userGalleries]);
+            return userGalleries;
+        } catch (err) {
+            console.error('Помилка завантаження галерей:', err);
+            alert('Не вдалося завантажити галереї з сервера.');
+            return [];
+        }
+    }
+
+    static getCachedUserGalleries() {
         const currentUser = StorageManager.getCurrentUser();
         if (!currentUser) return [];
 
@@ -585,7 +553,23 @@ class GalleryManager {
         return userGalleries;
     }
 
-    static getGalleryByCode(code) {
+    static async getGalleryByCode(code) {
+        try {
+            const response = await fetch(API_BASE + '/gallery/' + code);
+            const data = await response.json();
+
+            if (data.error || (!data.id && !data._id)) {
+                throw new Error(data.error || 'Галерею не знайдено');
+            }
+
+            return this.upsertGalleryFromServer(data);
+        } catch (err) {
+            console.error('Помилка завантаження галереї:', err);
+            return null;
+        }
+    }
+
+    static getCachedGalleryByCode(code) {
         const gallery = StorageManager.getGalleries().find(g => g.code === code);
         if (!gallery) return null;
 
@@ -624,6 +608,7 @@ class GalleryManager {
             userId: serverGallery.userId || serverGallery.photographerId || id,
             photoCount: serverGallery.photoCount || 0,
             selectedPhotos: serverGallery.selectedPhotos || 0,
+            photoStates: serverGallery.photoStates || {},
             createdAt: serverGallery.createdAt || new Date().toISOString(),
             photos: serverGallery.photos
         });
@@ -654,8 +639,8 @@ class DashboardManager {
         this.setupAddNewGallery();
     }
 
-    static renderGalleries() {
-        const galleries = GalleryManager.getUserGalleries();
+    static async renderGalleries() {
+        const galleries = await GalleryManager.getUserGalleries();
         const projectGrid = document.querySelector('.project-grid');
 
         if (!projectGrid) return;
@@ -735,26 +720,9 @@ class ClientAccessManager {
 
         console.log('Пошук галереї за кодом:', code);
 
-        try {
-            // Спочатку спробуємо сервер
-            const response = await fetch(API_BASE + '/gallery/' + code);
-            const data = await response.json();
-            
-            if (data._id || data.id) {
-                console.log('Галерею знайдено на сервері');
-                GalleryManager.upsertGalleryFromServer(data);
-                sessionStorage.setItem('gallery_code', code);
-                window.location.href = 'private-gallery.html?code=' + code;
-                return;
-            }
-        } catch (err) {
-            console.warn('Сервер недоступний, шукаємо локально:', err.message);
-        }
-
-        // FALLBACK: локальний пошук
-        const gallery = GalleryManager.getGalleryByCode(code);
+        const gallery = await GalleryManager.getGalleryByCode(code);
         if (gallery) {
-            console.log('Галерею знайдено локально');
+            console.log('Галерею знайдено на сервері');
             sessionStorage.setItem('gallery_code', code);
             window.location.href = 'private-gallery.html?code=' + code;
         } else {
@@ -777,7 +745,7 @@ class PrivateGalleryManager {
         this.setupModalClose();
     }
 
-    static loadGalleryFromCode() {
+    static async loadGalleryFromCode() {
         const code = new URLSearchParams(window.location.search).get('code') ||
                      sessionStorage.getItem('gallery_code');
 
@@ -786,7 +754,7 @@ class PrivateGalleryManager {
             return;
         }
 
-        const gallery = GalleryManager.getGalleryByCode(code);
+        const gallery = await GalleryManager.getGalleryByCode(code);
         if (gallery) {
             this.currentGallery = gallery;
             this.displayGallery(gallery);
@@ -910,18 +878,17 @@ class PrivateGalleryManager {
         }
     }
 
-    static toggleCurrentPhotoLike() {
+    static async toggleCurrentPhotoLike() {
         if (!this.currentGallery || !this.currentPhoto) return;
 
         const state = GalleryManager.getPhotoState(this.currentGallery.code, this.currentPhoto.id);
         state.liked = !state.liked;
-        GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
-        this.currentGallery = GalleryManager.getGalleryByCode(this.currentGallery.code);
+        this.currentGallery = await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
         this.renderPhotoActions();
         this.displayGallery(this.currentGallery);
     }
 
-    static addCurrentPhotoComment() {
+    static async addCurrentPhotoComment() {
         if (!this.currentGallery || !this.currentPhoto) return;
 
         const commentText = document.getElementById('commentText');
@@ -935,9 +902,8 @@ class PrivateGalleryManager {
             createdAt: new Date().toISOString()
         });
 
-        GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
+        this.currentGallery = await GalleryManager.setPhotoState(this.currentGallery.code, this.currentPhoto.id, state);
         commentText.value = '';
-        this.currentGallery = GalleryManager.getGalleryByCode(this.currentGallery.code);
         this.renderPhotoActions();
         this.displayGallery(this.currentGallery);
     }

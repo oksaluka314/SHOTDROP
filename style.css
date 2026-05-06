@@ -251,6 +251,7 @@ th {
     align-items: center;
     text-align: center;
     padding: 6% 2%;
+    color: var(--border-color);
     background-image: url('https://i.pinimg.com/1200x/71/e5/65/71e565e6e651014298cfa1044493b2ac.jpg');
     background-size: cover;
     background-position: center;
@@ -582,8 +583,8 @@ body.modal-open {
     position: absolute;
     top: 10px;
     right: 22px;
-    width: 42px;
-    height: 42px;
+    width: 30px;
+    height: 30px;
     border: 0;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
