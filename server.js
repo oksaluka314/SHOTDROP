@@ -129,6 +129,13 @@ app.use(async (req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    if (!req.url.startsWith('/api') && req.url !== '/') {
+        req.url = '/api' + req.url;
+    }
+    next();
+});
+
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
