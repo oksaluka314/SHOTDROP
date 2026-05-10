@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід для фотографів | SHOTDROP</title>
     <link rel="stylesheet" href="style.css"> 
-    <script src="script.js"></script>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
 
@@ -18,8 +21,8 @@
         <h1>Вхід для фотографів</h1>
         
         <div class="tabs">
-            <div class="tab active" data-tab="login" style="cursor: pointer;">Вхід</div>
-            <div class="tab" data-tab="register" style="cursor: pointer;">Реєстрація</div>
+            <div class="tab active" data-tab="login" >Вхід</div>
+            <div class="tab" data-tab="register">Реєстрація</div>
         </div>
         
         <!-- Login Form -->
@@ -35,9 +38,8 @@
             </div>
             
             <button type="submit" class="btn-login">Увійти в кабінет</button>
-            
             <div class="form-footer">
-                <a href="#" id="forgot-password-link" class="forgot-password">Забули пароль?</a>
+                <label id="none-accaunt-link" class="forgot-password">Немає акаунта?</label>
             </div>
         </form>
         
@@ -66,34 +68,33 @@
             <button type="submit" class="btn-login">Зареєструватися</button>
             
             <div class="form-footer">
-                <a href="#" id="already-account-link" class="forgot-password">Уже маєте акаунт?</a>
+                <label id="already-account-link" class="forgot-password" >Уже маєте акаунт?</label>
             </div>
         </form>
     </div>
 </div>
-
-<script>
-    // Tab switching logic (also in script.js but keep here for reference)
-    const tabs = document.querySelectorAll('.tab');
+<script> const tabs = document.querySelectorAll('.tab');
     const forms = document.querySelectorAll('.tab-content');
     
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
             const tabName = this.getAttribute('data-tab');
             
-            // Remove active class from all tabs and forms
             tabs.forEach(t => t.classList.remove('active'));
             forms.forEach(f => f.classList.remove('active'));
             
-            // Add active class to clicked tab
             this.classList.add('active');
             
-            // Show corresponding form
             document.getElementById(tabName + '-form').classList.add('active');
         });
     });
+    document.getElementById('already-account-link').addEventListener('click', () => {
+    document.querySelector('.tab[data-tab="login"]').click();
+    });
+    document.getElementById('none-accaunt-link').addEventListener('click', () => {
+    document.querySelector('.tab[data-tab="register"]').click();
+    });
 </script>
-
-
+<script src="script.js"></script>
 </body>
 </html>

@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Доступ до фото | SHOTDROP</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  
+  <script>
+      const savedTheme = localStorage.getItem('theme') || 'light';
+       document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
 </head>
 <body>
  <div class="header-minimal">
@@ -31,4 +35,5 @@
 </div>
 
 </body>
+<script src="script.js"></script>
 </html>

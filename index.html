@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOTDROP | Професійний сервіс доставки фото</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script>
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
 
@@ -15,6 +18,7 @@
         <ul class="nav-list">
             <li class="nav-item"><a href="client-access.html">Ввести код доступу</a></li>
             <li class="nav-item"><a href="accaunt.html" class="btn-client">Вхід для фотографа</a></li>
+            <li class="nav-item"><button id="theme-toggle" >и</button></li>
         </ul>
     </nav>
 </header>
@@ -24,7 +28,7 @@
     <p>Професійна доставка фотографій, зручний відбір для ретуші та безпечне хмарне сховище для ваших клієнтів.</p>
     <a href="client-access.html" class="cta-main">Отримати свої фото</a>
 </section>
-ч
+
 <section>
     <h2>Переваги платформи</h2>
     <div class="portfolio-preview">
@@ -93,4 +97,5 @@
 </footer>
 
 </body>
+<script src="script.js"></script>
 </html>

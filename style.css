@@ -21,13 +21,10 @@
     --secondary-bg:  #2a1d3a;
     --primary-text:  #ede7f6;
     --secondary-text: #a794c1;
-    
     --header-bg:     #251933;
     --header-hover:  #36254a;
-    
     --button-bg:     #9d50bb;
     --button-hover:  #b366d4;
-    
     --border-color:  #3d2b52;
     --shadow-color:  rgba(0, 0, 0, 0.5);
     --card-border:   #4a3563;
@@ -87,13 +84,15 @@ img {
 
 .nav-list {
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
     list-style: none;
-    margin: 0;
+    margin: 0px;
     padding: 0;
 }
 
 .nav-item {
-    min-width: 180px;
+   margin-left: 10px;
     text-align: center;
 }
 
@@ -138,7 +137,7 @@ button:disabled,
 
 /* Sections - всі сторінки */
 section {
-    padding: 4% 2%;
+    padding: 2%;
     margin: 0 auto;
 }
 
@@ -263,13 +262,21 @@ th {
     align-items: center;
     text-align: center;
     padding: 6% 2%;
-    color: var(--border-color);
+    color: #3d2b52;
     background-image: url('https://i.pinimg.com/1200x/71/e5/65/71e565e6e651014298cfa1044493b2ac.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
-
+#theme-toggle {
+    background: none;
+    border: 2px solid var(--button-bg);
+    color: var(--primary-text);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 .cta-main {
     background-color: var(--button-bg);
     color: var(--primary-text);
@@ -457,6 +464,7 @@ th {
 }
 
 .forgot-password {
+    background-color: none;
     color: var(--button-bg);
     font-size: 13px;
     transition: color 0.3s ease;

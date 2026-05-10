@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Private Gallery - SHOTDROP</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  
+  <script>
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
 </head>
 <body>
   
@@ -25,4 +29,5 @@
     <a href="index.html">© 2026 SHOTDROP</a>
 </footer>
 </body>
+<script src="script.js"></script>
 </html>
