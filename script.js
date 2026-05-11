@@ -1,92 +1,100 @@
-﻿// ЗМІНА ТЕМИ
-const updateThemeButton = () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const btnTheme = document.getElementById('theme-toggle');
-  btnTheme.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
-};
+﻿const supabaseUrl = 'https://tkmsvdavwtykvqvidozy.supabase.co'; 
+const supabaseKey = 'sb_publishable_Kgilulrm6Dkw9bD9WVjjEg_0nLwl1Qz';
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-const toggleTheme = () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme); 
-  updateThemeButton(); 
-};
-
-const btnTheme = document.getElementById('theme-toggle');
-btnTheme.addEventListener('click', toggleTheme);
-updateThemeButton(); 
-//========================================================================
-   // --- ОБРОБКА ВХОДУ ---
-const loginForm = document.getElementById('login-form');
-
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); 
-
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    const data = { email, password };
-
-    try {
-        const response = await fetch('/api/login', { // Шлях до вашого ендпоїнту на сервері
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // Перетворюємо об'єкт у JSON-рядок
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            alert('Вхід успішний!');
-            // Тут можна перенаправити користувача на іншу сторінку
-        } else {
-            alert('Помилка: ' + result.message);
+document.addEventListener('DOMContentLoaded', () => {
+  
+    const btnTheme = document.getElementById('theme-toggle');
+    
+    const updateTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (btnTheme) {
+            btnTheme.textContent = theme === 'dark' ? '🌙' : '☀️';
         }
-    } catch (error) {
-        console.error('Помилка мережі:', error);
-    }
-});
+    };
 
-// --- ОБРОБКА РЕЄСТРАЦІЇ ---
-const registerForm = document.getElementById('register-form');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    updateTheme(savedTheme);
 
-registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const confirmPassword = document.getElementById('register-confirm').value;
-
-    if (password !== confirmPassword) {
-        alert('Паролі не збігаються!');
-        return;
-    }
-
-    const data = { name, email, password };
-
-    try {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+    if (btnTheme) {
+        btnTheme.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            updateTheme(newTheme);
         });
+    }
 
-        if (response.ok) {
-            alert('Реєстрація успішна! Тепер ви можете увійти.');
-            // Можна автоматично перемкнути на таб входу
+    // === ПЕРЕМИКАННЯ ТАБІВ (Login/Register) ===
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`${target}-form`).classList.add('active');
+        });
+    });
+
+    // === РЕЄСТРАЦІЯ ===
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+
+            if (password !== confirm) {
+                alert("Паролі не збігаються!");
+                return;
+            }
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: { display_name: name }
+                }
+            });
+
+            if (error) alert("Помилка реєстрації: " + error.message);
+            else alert("Реєстрація успішна! Перевірте пошту для підтвердження.");
+        });
+    }
+
+    // === ВХІД ===
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) alert("Помилка входу: " + error.message);
+            else {alert("Вітаємо, ви увійшли!");
+                  window.location.href = "dashboard.html";
+            } 
+        });
+    }
+
+    // Допоміжні посилання (наприклад, "Уже маєте акаунт?")
+    const alreadyLink = document.getElementById('already-account-link');
+    if (alreadyLink) {
+        alreadyLink.addEventListener('click', (e) => {
+            e.preventDefault();
             document.querySelector('.tab[data-tab="login"]').click();
-        } else {
-            const errorData = await response.json();
-            alert('Помилка реєстрації: ' + errorData.message);
-        }
-    } catch (error) {
-        alert('Не вдалося з’єднатися з сервером');
+        });
     }
 });

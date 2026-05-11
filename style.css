@@ -2,11 +2,10 @@
    ТЕМНІ/СВІТЛІ ТЕМИ - CSS ЗМІННІ
    ================================================================ */
 :root {
-    /* Light theme */
     --primary-bg: #FAFAF8;
     --secondary-bg: #FFFFFF;
     --primary-text: #353434;
-    --secondary-text: #6B6B6B;
+    --secondary-text: #474747;
     --header-bg: #9B8DB8;
     --header-hover: #E8DFE8;
     --button-bg: #D4C9E0;
@@ -33,12 +32,11 @@
    ЗАГАЛЬНІ СТИЛІ (застосовуються до всіх сторінок)
    ================================================================ */
 
-/* General Styles - Body & Links */
 body {
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
+    line-height: 1.3;
     color: var(--primary-text);
     background-color: var(--primary-bg);
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -50,7 +48,6 @@ a {
     cursor: pointer;
 }
 
-/* Image Styles */
 img {
     max-width: 100%;
     height: auto;
@@ -94,6 +91,7 @@ img {
 .nav-item {
    margin-left: 10px;
     text-align: center;
+    min-width: 200px;
 }
 
 .nav-item:hover {
@@ -123,25 +121,11 @@ footer {
     background-color: var(--button-hover);
 }
 
-button:disabled,
-.btn-client:disabled,
-.btn-submit:disabled,
-.btn-login:disabled,
-.btn-add:disabled,
-.btn-download-all:disabled,
-.btn-like:disabled,
-.btn-send:disabled {
-    cursor: wait;
-    opacity: 0.65;
-}
-
-/* Sections - всі сторінки */
 section {
     padding: 2%;
     margin: 0 auto;
 }
 
-/* Table Styles - всі сторінки */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -162,7 +146,6 @@ th {
    DASHBOARD.HTML - Панель керування фотографа
    ================================================================ */
 
-/* Sidebar Styles */
 .sidebar {
     width: 20%;
     background-color: var(--header-bg);
@@ -170,35 +153,27 @@ th {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s ease;
 }
 
 .sidebar-nav {
     display: flex;
     flex-direction: column;
     margin-top: 4%;
+    align-items: center;
 }
 
-.nav-item {
-    padding: 1% 0;
-    color: var(--secondary-text);
-    transition: color 0.3s ease;
-}
-
-.nav-item.active {
-    color: var(--header-hover);
-    font-weight: 500;
-}
 
 .dashboard {
     display: flex;
+    margin: 0px;
+    padding: 0px;
 }
 
 .main {
     width: 80%;
-    padding: 2%;
+   margin: 3%;
 }
-/* Project Grid */
+
 .project-grid {
     display: flex;
     flex-wrap: wrap;
@@ -206,12 +181,12 @@ th {
 
 .project-card {
     width: 30%;
-    margin: 2%;
+    margin-top: 20px;
+    margin-right: 2%;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     overflow: hidden;
     background-color: var(--secondary-bg);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .project-card img {
@@ -235,7 +210,7 @@ th {
 }
 
 .project-info {
-    padding: 1.5%;
+    padding: 5px;
 }
 
 .project-stats {
@@ -268,15 +243,19 @@ th {
     background-position: center;
     background-attachment: fixed;
 }
+
 #theme-toggle {
     background: none;
     border: 2px solid var(--button-bg);
     color: var(--primary-text);
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    text-align: center;
+    font-size: 20px;
     cursor: pointer;
 }
+
 .cta-main {
     background-color: var(--button-bg);
     color: var(--primary-text);
@@ -299,16 +278,14 @@ th {
 
 .portfolio-preview img {
     width: 100%;
-    height: 250px;
+    height: 50%;
 }
 
 /* ================================================================
    ACCOUNT.HTML & CLIENT-ACCESS.HTML - Сторінки входу
    ================================================================ */
 
-/* Page Wrapper */
 .page-wrapper {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -322,23 +299,14 @@ th {
     z-index: 1000;
 }
 
-
-
-/* Access Container - для client-access.html */
 .access-container {
-    max-width: 55%;
-    margin: 2% auto;
+    width: 55%;
+    margin: 2.5% auto;
     padding: 4%;
-    text-align: center;
     background-color: var(--secondary-bg);
     border-radius: 8px;
     box-shadow: 0 4px 6px var(--shadow-color);
-    transition: background-color 0.3s ease;
-}
-
-.access-container .logo {
-    margin-bottom: 3%;
-    font-size: 28px;
+    text-align: center;
 }
 
 .access-container h2 {
@@ -353,15 +321,13 @@ th {
     margin-bottom: 3%;
 }
 
-/* Login Box - для account.html */
 .login-box {
     width: 55%;
-    margin: 2% auto;
+    margin: 2.5% auto;
     padding: 4%;
     background-color: var(--secondary-bg);
     border-radius: 8px;
     box-shadow: 0 4px 6px var(--shadow-color);
-    transition: background-color 0.3s ease;
 }
 
 .login-box h1 {
@@ -371,29 +337,6 @@ th {
     font-size: 24px;
 }
 
-/* Theme Switcher Button */
-.theme-btn {
-    background: none;
-    border: 2px solid var(--button-bg);
-    color: var(--primary-text);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    margin-right: 20px;
-}
-
-.theme-btn:hover {
-    background-color: var(--button-bg);
-    transform: scale(1.1);
-}
-
-/* Form Styles */
 .access-form,
 .tab-content form {
     display: flex;
@@ -465,16 +408,14 @@ th {
 
 .forgot-password {
     background-color: none;
-    color: var(--button-bg);
+    color: var(--header-bg);
     font-size: 13px;
-    transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
     color: var(--button-hover);
 }
 
-/* Tabs - для форм входу */
 .tabs {
     display: flex;
     margin-bottom: 3%;
@@ -512,263 +453,209 @@ th {
 }
 
 /* ================================================================
-   PHOTO-VIEW.HTML & PRIVATE-GALLERY.HTML - Галереї фотографій
+   АДАПТИВНИЙ ДИЗАЙН 
    ================================================================ */
-
-/* Gallery Info */
-.gallery-info {
-    text-align: center;
-}
-
-/* Photo Cards */
-.photo-card {
-    position: relative;
-    display: inline-block;
-    margin: 1%;
-}
-
-.photo-card img {
-    width: 100%;
-    height: 300px;
-}
-
-.photo-overlay {
-    position: absolute;
-    top: 1%;
-    right: 1%;
-    display: flex;
-    flex-direction: column;
-}
-
-.icon-badge {
-    background-color: rgba(255,255,255,0.8);
-    border-radius: 50%;
-    width: 3%;
-    height: auto;
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5%;
-}
-
-.modal {
-    display: flex;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #eee;
-}
-
-.photo-popup {
-    display: none;
-    position: fixed;
-    inset: 0;
-    width: 70%;
-    height: 80%;
-    padding: 4px;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.72);
-    border: 0;
-    border-radius: 5px;
-    top: 10%;
-    left: 15%;
-    z-index: 5000;
-}
-
-.photo-popup.active {
-    display: flex;
-}
-
-.photo-popup .modal-image-side,
-.photo-popup .modal-sidebar {
-    height: 100%;
-}
-
-.photo-popup > .modal-image-side,
-.photo-popup > .modal-sidebar {
-    max-height: 88vh;
-}
-
-body.modal-open {
-    overflow: hidden;
-}
-
-/* Кнопка закриття */
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 22px;
-    width: 30px;
-    height: 30px;
-    border: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    font-size: 30px;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 5010;
-    color: #333;
-}
-
-.close-modal:hover {
-    color: #ff4757;
-}
-
-/* Ліва частина: Зображення */
-.modal-image-side {
-    flex: 1.5;
-    background-color: #1a1a1a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.modal-image-side img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Фото не обрізається і вписується в межі */
-}
-
-/* Права частина: Сайдбар */
-.modal-sidebar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    background: #fff;
-    border-left: 1px solid #f0f0f0;
-}
-
-/* Секція лайка */
-.like-section {
-    margin-bottom: 25px;
-}
-
-.btn-like {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background-color: #D4C9E0;
-    color: #353434;
-    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-.btn-like:hover {
-    background-color: #BFA8D8;
-    color: #353434;
-}
-
-/* Список коментарів */
-.comments-section {
-    flex-grow: 1;
-    overflow-y: auto; /* Дозволяє скролити коментарі, якщо їх багато */
-    margin-bottom: 20px;
-    padding-right: 10px;
-}
-
-.comment-item {
-    background: #f9f9f9;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.comment-item strong {
-    color: #353434;
-    display: block;
-    margin-bottom: 4px;
-}
-
-.comment-item p {
-    margin: 0;
-    color: #6B6B6B;
-    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-}
-
-/* Заголовок в секції коментарів */
-.comments-title {
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: #353434;
-    font-weight: 500;
-}
-
-/* Поле введення */
-.comment-input-area {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#commentText {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #D4C9E0;
-    border-radius: 6px;
-    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-    font-size: 14px;
-    color: #353434;
-    resize: vertical;
-    min-height: 100px;
-}
-
-#commentText:focus {
-    outline: none;
-    border-color: #9B8DB8;
-    background-color: #F5F0FA;
-}
-
-#commentText::placeholder {
-    color: #bbb;
-}
-
-.btn-send {
-    background-color: #D4C9E0;
-    color: #353434;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    font-family: 'Palatino Linotype', 'Book Antiqua', serif;
-}
-
-.btn-send:hover {
-    background-color: #BFA8D8;
-}
-
-@media (max-width: 760px) {
-    .photo-popup {
-        flex-direction: column;
-        padding: 64px 12px 12px;
-        overflow-y: auto;
+@media (max-width: 768px) {
+    
+    body {
+        font-size: 16px;
     }
 
-    .photo-popup > .modal-image-side,
-    .photo-popup > .modal-sidebar {
+    .header {
+        flex-wrap: wrap;
+        padding: 1%;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .logo {
+        font-size: 23px;
+        flex: auto;
+        text-align: center;
+    }
+
+    .nav {
         width: 100%;
-        max-height: none;
+        justify-content: center;
     }
 
-    .modal-image-side {
-        min-height: 45vh;
-        flex: none;
+    .nav-list {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
-    .modal-sidebar {
-        flex: none;
-        box-sizing: border-box;
-        border-left: 0;
+    .nav-item {
+        margin-left: 5px;
+        text-align: center; 
+        font-size: 16px;
+        padding: 5px 8px;
+    }
+
+    footer {
+        padding: 1.5%;
+        font-size: 13px;
+    }
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 1.5%;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .nav-item {
+        flex: 1;
+        min-width: 80px;
+        padding: 0.8% 1%;
+        text-align: center;
+    }
+
+    .main {
+        width: 92%;
+        padding: 1%;
+    }
+
+    .project-card {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .project-card img {
+        height: 250px;
+    }
+
+    .main-section {
+        padding: 4% 2%;
+        background-attachment: scroll;
+    }
+
+    .main-section h1 {
+        font-size: 24px;
+        margin: 0.5rem 0;
+    }
+
+    .main-section p {
+        font-size: 14px;
+        margin: 0.5rem 0;
+    }
+
+    .cta-main {
+        padding: 1% 2%;
+        font-size: 14px;
+        width: 100%;
+        max-width: 250px;
+        margin-top: 1rem;
+    }
+
+    .portfolio-preview {
+        flex-direction: column;
+        margin-top: 1.5%;
+    }
+
+    .portfolio-preview > div {
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .portfolio-preview img {
+        height: 300px;
+    }
+
+    .page-wrapper {
+        min-height: auto;
+    }
+
+    .access-container,
+    .login-box {
+        align-items: center;
+        width: 90%;
+        margin: 2.5%;
+        padding: 3%;
+        border-radius: 6px;
+    }
+
+    .access-container .logo {
+        font-size: 22px;
+        margin-bottom: 2%;
+    }
+
+    .access-container h2,
+    .login-box h1 {
+        font-size: 20px;
+        margin: 0.5rem 0;
+    }
+
+    .access-description {
+        font-size: 13px;
+        margin-bottom: 2%;
+    }
+
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-input {
+        padding: 2% 2%;
+        font-size: 14px;
+        min-height: 40px;
+    }
+
+    .form-input::placeholder {
+        font-size: 14px;
+    }
+
+    .tabs {
+        margin-bottom: 2%;
+    }
+
+    .tab {
+        padding: 1.2%;
+        font-size: 12px;
+    }
+
+    .btn-client,
+    .btn-submit,
+    .btn-login,
+    .btn-add,
+    .btn-download-all,
+    .cta-main {
+        padding: 8px;
+        font-size: 16px;
+        width: auto;
+        
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        font-size: 14px;
+        margin-bottom: 3%;
+    }
+
+    th, td {
+        padding: 0.8%;
+        font-size: 14px;
+        word-break: break-word;
+    }
+
+    section {
+        padding: 1.5%;
     }
 }
+

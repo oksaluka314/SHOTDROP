@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід для фотографів | SHOTDROP</title>
     <link rel="stylesheet" href="style.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -73,28 +74,7 @@
         </form>
     </div>
 </div>
-<script> const tabs = document.querySelectorAll('.tab');
-    const forms = document.querySelectorAll('.tab-content');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabName = this.getAttribute('data-tab');
-            
-            tabs.forEach(t => t.classList.remove('active'));
-            forms.forEach(f => f.classList.remove('active'));
-            
-            this.classList.add('active');
-            
-            document.getElementById(tabName + '-form').classList.add('active');
-        });
-    });
-    document.getElementById('already-account-link').addEventListener('click', () => {
-    document.querySelector('.tab[data-tab="login"]').click();
-    });
-    document.getElementById('none-accaunt-link').addEventListener('click', () => {
-    document.querySelector('.tab[data-tab="register"]').click();
-    });
-</script>
+
 <script src="script.js"></script>
 </body>
 </html>
