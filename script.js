@@ -5,31 +5,6 @@ const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 document.addEventListener('DOMContentLoaded', () => {
 
 // ОБМЕЖЕННЯ ДОСТУПУ ДО ДАШБОРДУ
-const checkAccess = async () => {
-    try {
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
-
-        if (error) throw error;
-
-        if (!session) {
-            console.log("Сесії немає, перенаправляю...");
-            window.location.href = 'account.html';
-        } else {
-            console.log("Доступ дозволено для:", session.user.email);
-            // ПОКАЗУЄМО КОНТЕНТ
-            const mainContent = document.querySelector('main') || document.getElementById('hidden');
-        if (mainContent) {
-            mainContent.style.display = 'block';
-        } 
-           
-        }
-    } catch (err) {
-        console.error("Помилка перевірки доступу:", err.message);
-        window.location.href = 'account.html';
-    }
-};
-
-checkAccess();
 
     const btnTheme = document.getElementById('theme-toggle');
     
