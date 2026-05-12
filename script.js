@@ -3,9 +3,7 @@ const supabaseKey = 'sb_publishable_Kgilulrm6Dkw9bD9WVjjEg_0nLwl1Qz';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener('DOMContentLoaded', () => {
-
-// ОБМЕЖЕННЯ ДОСТУПУ ДО ДАШБОРДУ
-
+    // ПЕРЕМИКАННЯ ТЕМИ
     const btnTheme = document.getElementById('theme-toggle');
     
     const updateTheme = (theme) => {
@@ -107,20 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //ВИХІД З АКАУНТА
+const logOut = document.getElementById('logout-btn')
+if(logOut) {
+    logOut.addEventListener('click', async () => {
+        const { error } = await supabaseClient.auth.signOut();
+        
+        if (error) {
+        alert("Помилка при виході: " + error.message);
+         } else {
+        window.location.href = 'index.html';
+    }
+});
+}
 
-
-
-
-
-    const deleteAccountBtn = document.getElementById('logout-btn');
-    if (deleteAccountBtn) {
-        deleteAccountBtn.addEventListener('click', async () => {
-              e.preventDefault();
-           const confirmDelete = confirm("Ви впевнені, що хочете видалити акаунт? ");
-           if (confirmDelete) {
-               await supabaseClient.auth.deleteUser();
-               alert("Ваш акаунт видалено. До побачення!");
-               window.location.href = "index.html";
-           }
-        });}
 });
