@@ -8,7 +8,7 @@
     --secondary-text: #474747;
     --header-bg: #9B8DB8;
     --header-hover: #E8DFE8;
-    --button-bg: #D4C9E0;
+    --button-bg: #ceb8e5;
     --button-hover: #BFA8D8;
     --border-color: #ddd;
     --shadow-color: rgba(0,0,0,0.1);
@@ -39,7 +39,6 @@ body {
     line-height: 1.3;
     color: var(--primary-text);
     background-color: var(--primary-bg);
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -65,7 +64,6 @@ img {
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: background-color 0.3s ease;
 }
 
 .logo {
@@ -103,7 +101,6 @@ footer {
     color: var(--primary-text);
     text-align: center;
     padding: 2%;
-    transition: background-color 0.3s ease;
 }
 
 .btn-client, .btn-submit, .btn-login, .btn-add, .btn-download-all {
@@ -114,7 +111,6 @@ footer {
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s ease;
 }
 
 .btn-client:hover, .btn-submit:hover, .btn-login:hover, .btn-add:hover, .btn-download-all:hover, .cta-main:hover {
@@ -228,6 +224,10 @@ th {
     color: var(--primary-text);
 }
 
+#logout-btn {
+    color: rgb(214, 17, 17);
+    font-weight: 700;
+}
 /* ================================================================
    INDEX.HTML - Головна сторінка
    ================================================================ */
@@ -262,7 +262,6 @@ th {
     padding: 1.5% 3%;
     border-radius: 5px;
     font-weight: 700;
-    transition: background-color 0.3s ease;
 }
 
 .portfolio-preview {
@@ -368,7 +367,6 @@ th {
     box-sizing: border-box;
     background-color: var(--secondary-bg);
     color: var(--primary-text);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .form-input:focus {
@@ -391,7 +389,6 @@ th {
 .back-link {
     color: var(--button-bg);
     font-size: 14px;
-    transition: color 0.3s ease;
 }
 
 .back-link:hover {
@@ -408,8 +405,9 @@ th {
 
 .forgot-password {
     background-color: none;
-    color: var(--header-bg);
+    color: var(--button-bg);
     font-size: 13px;
+    font-weight: 600;
 }
 
 .forgot-password:hover {
@@ -419,8 +417,7 @@ th {
 .tabs {
     display: flex;
     margin-bottom: 3%;
-    gap: 0;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--button-bg);
 }
 
 .tab {
@@ -430,9 +427,7 @@ th {
     font-weight: 500;
     color: var(--secondary-text);
     border-bottom: 3px solid transparent;
-    margin-bottom: -0.2%;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 .tab:hover {
@@ -449,7 +444,7 @@ th {
 }
 
 .tab-content.active {
-    display: block;
+    display:block ;
 }
 
 /* ================================================================
@@ -588,25 +583,19 @@ th {
         border-radius: 6px;
     }
 
-    .access-container .logo {
-        font-size: 22px;
-        margin-bottom: 2%;
-    }
-
     .access-container h2,
     .login-box h1 {
         font-size: 20px;
-        margin: 0.5rem 0;
     }
 
     .access-description {
-        font-size: 13px;
-        margin-bottom: 2%;
+        font-size: 16px;
+       
     }
 
 
     .form-group label {
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .form-input {
@@ -617,15 +606,6 @@ th {
 
     .form-input::placeholder {
         font-size: 14px;
-    }
-
-    .tabs {
-        margin-bottom: 2%;
-    }
-
-    .tab {
-        padding: 1.2%;
-        font-size: 12px;
     }
 
     .btn-client,

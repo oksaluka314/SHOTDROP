@@ -3,7 +3,34 @@ const supabaseKey = 'sb_publishable_Kgilulrm6Dkw9bD9WVjjEg_0nLwl1Qz';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener('DOMContentLoaded', () => {
-  
+
+// ОБМЕЖЕННЯ ДОСТУПУ ДО ДАШБОРДУ
+const checkAccess = async () => {
+    try {
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
+
+        if (error) throw error;
+
+        if (!session) {
+            console.log("Сесії немає, перенаправляю...");
+            window.location.href = 'account.html';
+        } else {
+            console.log("Доступ дозволено для:", session.user.email);
+            // ПОКАЗУЄМО КОНТЕНТ
+            const mainContent = document.querySelector('main') || document.getElementById('hidden');
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        } 
+           
+        }
+    } catch (err) {
+        console.error("Помилка перевірки доступу:", err.message);
+        window.location.href = 'account.html';
+    }
+};
+
+checkAccess();
+
     const btnTheme = document.getElementById('theme-toggle');
     
     const updateTheme = (theme) => {
@@ -25,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === ПЕРЕМИКАННЯ ТАБІВ (Login/Register) ===
+    // ПЕРЕМИКАННЯ ВХОДУ/РЕЄСТРАЦІЇ
     const tabs = document.querySelectorAll('.tab');
     const contents = document.querySelectorAll('.tab-content');
 
@@ -39,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === РЕЄСТРАЦІЯ ===
+    // РЕЄСТРАЦІЯ
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
@@ -68,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === ВХІД ===
+    // ВХІД 
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -89,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Допоміжні посилання (наприклад, "Уже маєте акаунт?")
+    // НЕМАЄ АКАУНТА? / УЖЕ МАЄТЕ АКАУНТ? 
     const alreadyLink = document.getElementById('already-account-link');
     if (alreadyLink) {
         alreadyLink.addEventListener('click', (e) => {
@@ -97,4 +124,28 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.tab[data-tab="login"]').click();
         });
     }
+    const noneAccountLink = document.getElementById('none-account-link');
+    if (noneAccountLink) {
+        noneAccountLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('.tab[data-tab="register"]').click();
+        });
+    }
+
+
+
+
+
+
+    const deleteAccountBtn = document.getElementById('logout-btn');
+    if (deleteAccountBtn) {
+        deleteAccountBtn.addEventListener('click', async () => {
+              e.preventDefault();
+           const confirmDelete = confirm("Ви впевнені, що хочете видалити акаунт? ");
+           if (confirmDelete) {
+               await supabaseClient.auth.deleteUser();
+               alert("Ваш акаунт видалено. До побачення!");
+               window.location.href = "index.html";
+           }
+        });}
 });
