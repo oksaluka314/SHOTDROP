@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (error) alert("Помилка входу: " + error.message);
-            else {alert("Вітаємо, ви увійшли!");
+            else {alert(`Вітаємо ${data.user.user_metadata.display_name}, ви увійшли!`);
                   window.location.href = "dashboard.html";
             } 
         });
@@ -118,5 +118,38 @@ if(logOut) {
     }
 });
 }
+
+// ПАРАЛАКС ЕФЕКТ
+window.addEventListener('scroll', () => {
+    document.querySelector('.main-section h1').style.transform = `translateX(-${window.scrollY * 0.8}px)`;
+    document.querySelector('.main-section p').style.transform = `translateX(${window.scrollY * 0.8}px)`;
+});
+
+const mouseParalax = document.querySelectorAll('img');
+
+mouseParalax.forEach((img) => {
+    img.addEventListener('mousemove', (e) => {
+        const rect = img.getBoundingClientRect();
+      
+        const x = e.clientX - rect.left; 
+        const y = e.clientY - rect.top;
+      
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+     
+        const rotateX = (centerY - y) / 10; 
+        const rotateY = (x - centerX) / 10;
+
+    img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+})
+
+mouseParalax.forEach((img) => {
+    img.addEventListener('mouseleave', () => {
+        img.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    });
+})
+
+
 
 });

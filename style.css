@@ -232,7 +232,7 @@ th {
    INDEX.HTML - Головна сторінка
    ================================================================ */
 .main-section {  
-    height: 250px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -341,14 +341,12 @@ th {
 .tab-content form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8%;
 }
 
 .form-group label {
@@ -460,7 +458,6 @@ th {
     .header {
         flex-wrap: wrap;
         padding: 1%;
-        gap: 1rem;
         text-align: center;
     }
 
@@ -501,7 +498,7 @@ th {
         width: 100%;
         height: auto;
         padding: 1.5%;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5%;
         border-bottom: 2px solid var(--border-color);
     }
 
@@ -509,8 +506,7 @@ th {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
+        margin-top: 1.5%;
     }
 
     .nav-item {
@@ -543,7 +539,7 @@ th {
         font-size: 14px;
         width: 100%;
         max-width: 250px;
-        margin-top: 1rem;
+        margin-top: 1.5%;
     }
 
     .portfolio-preview {
@@ -553,7 +549,7 @@ th {
 
     .portfolio-preview > div {
         max-width: 100%;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.5%;
     }
 
     .portfolio-preview img {
@@ -598,16 +594,10 @@ th {
         font-size: 14px;
     }
 
-    .btn-client,
-    .btn-submit,
-    .btn-login,
-    .btn-add,
-    .btn-download-all,
-    .cta-main {
+    .btn-client,.btn-submit,.btn-login,.btn-add,.btn-download-all,.cta-main {
         padding: 8px;
         font-size: 16px;
         width: auto;
-        
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -621,7 +611,6 @@ th {
     th, td {
         padding: 0.8%;
         font-size: 14px;
-        word-break: break-word;
     }
 
     section {
