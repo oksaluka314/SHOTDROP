@@ -121,8 +121,15 @@ if(logOut) {
 
 // ПАРАЛАКС ЕФЕКТ
 window.addEventListener('scroll', () => {
-    document.querySelector('.main-section h1').style.transform = `translateX(-${window.scrollY * 0.8}px)`;
-    document.querySelector('.main-section p').style.transform = `translateX(${window.scrollY * 0.8}px)`;
+    const mainH1 = document.querySelector('.main-section h1');
+    const mainP = document.querySelector('.main-section p');
+    
+    if (mainH1) {
+        mainH1.style.transform = `translateX(-${window.scrollY * 0.8}px)`;
+    }
+    if (mainP) {
+        mainP.style.transform = `translateX(${window.scrollY * 0.8}px)`;
+    }
 });
 
 const mouseParalax = document.querySelectorAll('img');
@@ -140,8 +147,8 @@ mouseParalax.forEach((img) => {
         const rotateX = (centerY - y) / 10; 
         const rotateY = (x - centerX) / 10;
 
-    img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-});
+        img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
 })
 
 mouseParalax.forEach((img) => {
@@ -150,6 +157,112 @@ mouseParalax.forEach((img) => {
     });
 })
 
+// DASHBOARD НАВІГАЦІЯ
+const dashboardNavs = document.querySelectorAll('.dashboard-nav');
+const dashboardContents = document.querySelectorAll('.dashboard-content');
+
+dashboardNavs.forEach(nav => {
+    nav.addEventListener('click', () => {
+        const targetPage = nav.dataset.page;
+        
+        // Видаляємо активний клас зі всіх навігаційних елементів та контенту
+        dashboardNavs.forEach(n => n.classList.remove('active'));
+        dashboardContents.forEach(c => c.classList.remove('active'));
+        
+        // Додаємо активний клас до вибраних елементів
+        nav.classList.add('active');
+        const activeContent = document.querySelector(`.dashboard-content[data-content="${targetPage}"]`);
+        if (activeContent) {
+            activeContent.classList.add('active');
+        }
+    });
+});
+
+// ЗАВАНТАЖЕННЯ ДАНИХ КОРИСТУВАЧА В НАЛАШТУВАННЯХ
+const loadUserData = async () => {
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    
+    if (session) {
+        const userNameInput = document.getElementById('user-name');
+        const userEmailInput = document.getElementById('user-email');
+        const themeSelect = document.getElementById('theme-select');
+        
+        if (userNameInput) {
+            userNameInput.value = session.user.user_metadata?.display_name || '';
+        }
+        if (userEmailInput) {
+            userEmailInput.value = session.user.email || '';
+        }
+        if (themeSelect) {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            themeSelect.value = savedTheme;
+        }
+    }
+};
+
+// ЗБЕРЕЖЕННЯ ПРОФІЛЯ
+const saveProfileBtn = document.getElementById('save-profile-btn');
+if (saveProfileBtn) {
+    saveProfileBtn.addEventListener('click', async () => {
+        const newName = document.getElementById('user-name').value;
+        
+        if (!newName.trim()) {
+            alert('Будь ласка, введіть ім\'я');
+            return;
+        }
+        
+        const { data, error } = await supabaseClient.auth.updateUser({
+            data: { display_name: newName }
+        });
+        
+        if (error) {
+            alert('Помилка при оновленні профілю: ' + error.message);
+        } else {
+            alert('Профіль успішно оновлено!');
+        }
+    });
+}
+
+// ПЕРЕКЛЮЧЕННЯ ТЕМИ В НАЛАШТУВАННЯХ
+const themeSelect = document.getElementById('theme-select');
+if (themeSelect) {
+    themeSelect.addEventListener('change', (e) => {
+        const newTheme = e.target.value;
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
+// ОНОВЛЕННЯ ПАРОЛЯ
+const updatePasswordBtn = document.getElementById('update-password-btn');
+if (updatePasswordBtn) {
+    updatePasswordBtn.addEventListener('click', async () => {
+        const newPassword = document.getElementById('new-password').value;
+        
+        if (!newPassword || newPassword.length < 6) {
+            alert('Пароль повинен мати мінімум 6 символів');
+            return;
+        }
+        
+        const { error } = await supabaseClient.auth.updateUser({
+            password: newPassword
+        });
+        
+        if (error) {
+            alert('Помилка при оновленні пароля: ' + error.message);
+        } else {
+            alert('Пароль успішно оновлено!');
+            document.getElementById('new-password').value = '';
+        }
+    });
+}
+
+// Завантажуємо дані користувача при завантаженні сторінки
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadUserData);
+} else {
+    loadUserData();
+}
 
 
 });

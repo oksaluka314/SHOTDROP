@@ -28,6 +28,12 @@
     --shadow-color:  rgba(0, 0, 0, 0.5);
     --card-border:   #4a3563;
 }
+
+/* Global Box Sizing */
+* {
+    box-sizing: border-box;
+}
+
 /* ================================================================
    ЗАГАЛЬНІ СТИЛІ (застосовуються до всіх сторінок)
    ================================================================ */
@@ -39,6 +45,7 @@ body {
     line-height: 1.3;
     color: var(--primary-text);
     background-color: var(--primary-bg);
+    overflow-x: hidden;
 }
 
 a {
@@ -146,9 +153,12 @@ th {
     width: 20%;
     background-color: var(--header-bg);
     padding: 2%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .sidebar-nav {
@@ -161,13 +171,18 @@ th {
 
 .dashboard {
     display: flex;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .main {
     width: 80%;
-   margin: 3%;
+    padding: 2%;
+    overflow-y: auto;
+    max-height: calc(100vh - 0px);
+    box-sizing: border-box;
 }
 
 .project-grid {
@@ -183,6 +198,7 @@ th {
     border-radius: 5px;
     overflow: hidden;
     background-color: var(--secondary-bg);
+    position: relative;
 }
 
 .project-card img {
@@ -207,13 +223,17 @@ th {
 
 .project-info {
     padding: 5px;
+    
 }
 
 .project-stats {
     display: flex;
     justify-content: space-between;
-    margin-top: 1%;
     font-size: 14px;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
     color: var(--secondary-text);
 }
 
@@ -227,6 +247,260 @@ th {
 #logout-btn {
     color: rgb(214, 17, 17);
     font-weight: 700;
+}
+
+/* Dashboard Navigation */
+.dashboard-nav {
+    cursor: pointer;
+    padding: 12px 8px;
+    border-radius: 5px;
+    color: var(--secondary-text);
+}
+
+.dashboard-nav:hover {
+    background-color: var(--header-hover);
+    color: var(--primary-text);
+}
+
+.dashboard-nav.active {
+    background-color: var(--button-bg);
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+/* Dashboard Content Sections */
+.dashboard-content {
+    display: none;
+}
+
+.dashboard-content.active {
+    display: block;
+}
+
+/* Clients Section */
+.clients-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 1.5%;
+    background-color: var(--secondary-bg);
+}
+
+.client-card:hover {
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transform: translateY(-2px);
+}
+
+.client-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--button-bg);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.client-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+}
+
+.client-info p {
+    margin: 0 0 10px 0;
+    color: var(--secondary-text);
+}
+
+.client-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: var(--secondary-text);
+}
+
+/* Pricing Section */
+.pricing-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.pricing-card {
+    width: 45%;
+    padding: 30px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--secondary-bg);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+.pricing-card h3 {
+    font-size: 24px;
+}
+
+.price {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--button-bg);
+    margin: 20px 0;
+}
+
+.price span {
+    font-size: 16px;
+    color: var(--secondary-text);
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.pricing-features li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-features li:last-child {
+    border-bottom: none;
+}
+
+.btn-pricing, .btn-pricing-primary {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--button-bg);
+    color: white;
+    font-weight: 700;
+}
+
+/* Settings Section */
+.settings-section {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.settings-group {
+    background-color: var(--secondary-bg);
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.settings-group h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: var(--primary-text);
+}
+
+.setting-item {
+    margin-bottom: 15px;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.setting-item input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+}
+
+.setting-item.checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.setting-item.checkbox input {
+    width: auto;
+}
+
+.setting-item.checkbox label {
+    margin: 0;
+}
+
+/* Select елементи */
+select.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+select.form-input:hover {
+    border-color: var(--button-bg);
+}
+
+select.form-input:focus {
+    outline: none;
+    border-color: var(--button-bg);
+    box-shadow: 0 0 0 2px rgba(206, 184, 229, 0.2);
+}
+
+/* Header Dashboard */
+.header-dash {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.header-dash h1 {
+    margin: 0;
+    font-size: 28px;
+    color: var(--primary-text);
+}
+
+.gallery-info {
+    margin-left: 2%;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-text);
+}
+
+.photo-grid {
+    display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin: 2%;
+}
+.photo-grid img {
+    width: 23%;
+    margin: 5px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 /* ================================================================
    INDEX.HTML - Головна сторінка
@@ -493,6 +767,10 @@ th {
 
     .dashboard {
         flex-direction: column;
+        align-items: center;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
     }
 
     .sidebar {
@@ -501,30 +779,59 @@ th {
         padding: 1.5%;
         margin-bottom: 1.5%;
         border-bottom: 2px solid var(--border-color);
+        align-items: center;
+        overflow: visible;
     }
 
     .sidebar-nav {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         margin-top: 1.5%;
+        width: 100%;
+        gap: 8px;
     }
 
     .nav-item {
         flex: 1;
         min-width: 80px;
         padding: 0.8% 1%;
+        margin-left: 0;
         text-align: center;
     }
 
     .main {
-        width: 92%;
-        padding: 1%;
+        width: min(92%, 720px);
+        max-height: none;
+        padding: 16px;
+        margin: 0 auto;
+        overflow: visible;
+        text-align: center;
+    }
+
+    .project-grid {
+        justify-content: center;
+        width: 100%;
     }
 
     .project-card {
         width: 100%;
         margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .project-info {
+        text-align: center;
+    }
+
+    .project-stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
     }
 
     .project-card img {
@@ -617,5 +924,102 @@ th {
     section {
         padding: 1.5%;
     }
-}
 
+    /* Adaptive Dashboard Elements */
+    .sidebar-nav {
+        flex-direction: column;
+    }
+
+    .dashboard-nav {
+        width: 100%;
+        text-align: center;
+    }
+
+    .sidebar .nav-item {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .clients-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .client-card {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .client-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .client-avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .pricing-section {
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .pricing-card {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    .settings-section {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .settings-group {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .settings-group h3 {
+        font-size: 16px;
+    }
+
+    .setting-item {
+        margin-bottom: 12px;
+    }
+
+    select.form-input {
+        font-size: 14px;
+    }
+
+    .header-dash h1 {
+        font-size: 20px;
+    }
+
+    .header-dash {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .btn-add, .btn-login, .btn-pricing, .btn-pricing-primary {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .photo-grid img {
+        width: 40%;
+    }
+}

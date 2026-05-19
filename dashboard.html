@@ -18,47 +18,175 @@
 <aside class="sidebar">
     <div class="logo"><a href="index.html">SHOTDROP</a></div>
     <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-page="projects">Мої проєкти</a>
-        <a href="#" class="nav-item" data-page="clients">Клієнти</a>
-        <a href="#" class="nav-item" data-page="pricing">Тарифний план</a>
-        <a href="#" class="nav-item" data-page="settings">Налаштування</a>
-        <a href="#" class="nav-item" id="logout-btn" >Вийти з акаунта</a>
+        <div class="nav-item dashboard-nav active" data-page="projects">Мої проєкти</div>
+        <div class="nav-item dashboard-nav" data-page="clients">Клієнти</div>
+        <div class="nav-item dashboard-nav" data-page="pricing">Тарифний план</div>
+        <div class="nav-item dashboard-nav" data-page="settings">Профіль</div>
+        <div class="nav-item" id="logout-btn">Вийти з акаунта</div>
+    
     </nav>
 </aside>
 
 <div class="main">
-    <div class="header-dash">
-        <h1>Ваші галереї</h1>
-        <a href="#" class="btn-add">+ Нова зйомка</a>
+   
+    <!-- Projects Section -->
+    <div class="dashboard-content active" data-content="projects">
+        <div class="header-dash">
+            <h1>Ваші галереї</h1>
+            <button class="btn-add">+ Нова зйомка</button>
+        </div>
+
+        <div class="project-grid"> 
+           
+            <div class="project-card" data-project-id="1" data-project-name="Весілля Олександра та Марії" data-project-thumb="https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg">
+                <div class="project-thumb">
+                    <a href="private-gallery.html" class="project-link"><img src="https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg" alt=""></a>
+                    <span class="project-status">Активна</span>
+                </div>
+                <div class="project-info">
+                    <h3>Весілля Олександра та Марії</h3>
+                    <div class="project-stats">
+                        <span>124 фото</span>
+                        <span>12 ❤️ відібрано</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-project-id="2" data-project-name="Інтер'єрна зйомка" data-project-thumb="https://i.pinimg.com/736x/2d/a6/cf/2da6cf66094eb064216d51334b14f095.jpg">
+                <div class="project-thumb">
+                    <a href="private-gallery.html" class="project-link"><img src="https://i.pinimg.com/736x/2d/a6/cf/2da6cf66094eb064216d51334b14f095.jpg" alt=""></a>
+                </div>
+                <div class="project-info">
+                    <h3>Інтер'єрна зйомка </h3>
+                    <div class="project-stats">
+                        <span>45 фото</span>
+                        <span>0 відібрано</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="project-grid">
-        <div class="project-card">
-            <div class="project-thumb">
-                <a href="private-gallery.html"><img src="https://i.pinimg.com/736x/f4/52/ce/f452ce0c355088846809f040ace7d0d1.jpg" alt=""></a>
-                <span class="project-status">Активна</span>
-            </div>
-            <div class="project-info">
-                <h3>Весілля Олександра та Марії</h3>
-                <div class="project-stats">
-                    <span>124 фото</span>
-                    <span>12 ❤️ відібрано</span>
+    <!-- Clients Section -->
+    <div class="dashboard-content" data-content="clients">
+        <div class="header-dash">
+            <h1>Мої клієнти</h1>
+            <button class="btn-add">+ Додати клієнта</button>
+        </div>
+
+        <div class="clients-list">
+            <div class="client-card">
+                <div class="client-avatar">МО</div>
+                <div class="client-info">
+                    <h3>Марія Олійник</h3>
+                    <p>Весілля - 14.06.2025</p>
+                    <div class="client-stats">
+                        <span>Статус: Активна</span>
+                        <span>Доступні 124 фото</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project-card">
-            <div>
-                 <img  src="https://i.pinimg.com/736x/2d/a6/cf/2da6cf66094eb064216d51334b14f095.jpg" alt="">
-            </div>
-            <div class="project-info">
-                <h3>Інтер'єрна зйомка </h3>
-                <div class="project-stats">
-                    <span>45 фото</span>
-                    <span>0 відібрано</span>
+            <div class="client-card">
+                <div class="client-avatar">ІВ</div>
+                <div class="client-info">
+                    <h3>Іван Васильєв</h3>
+                    <p>Портретна сесія - 10.06.2025</p>
+                    <div class="client-stats">
+                        <span>Статус: Завершена</span>
+                        <span>Доступні 45 фото</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Pricing Section -->
+    <div class="dashboard-content" data-content="pricing">
+        <div class="header-dash">
+            <h1>Тарифні плани</h1>
+        </div>
+
+        <div class="pricing-section">
+            <div class="pricing-card">
+                <h3>Базовий (Free)</h3>
+                <div class="price">0 грн</div>
+                <ul class="pricing-features">
+                    <li>✓ До 3 проєктів</li>
+                    <li>✓ Термін зберігання: 30 днів</li>
+                    <li>✓ Лише перегляд для клієнта</li>
+                    <li>✗ Без комунікації</li>
+                    <li>✗ Без аналітики</li>
+                </ul>
+                <button class="btn-pricing">Ви користуєтесь цим</button>
+            </div>
+            <div class="pricing-card active-plan">
+                <h3>Професійний</h3>
+                <div class="price">299 грн <span>/місяць</span></div>
+                <ul class="pricing-features">
+                    <li>✓ Безліміт проєктів</li>
+                    <li>✓ Термін зберігання: 1 рік +</li>
+                    <li>✓ Інтерактивні лайки/коментарі</li>
+                    <li>✓ Особистісна комунікація</li>
+                    <li>✓ Детальна аналітика</li>
+                </ul>
+                <button class="btn-pricing-primary">Активний план</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="dashboard-content" data-content="settings">
+        <div class="header-dash">
+            <h1>Налаштування</h1>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-group">
+                <h3>Профіль</h3>
+                <div class="setting-item">
+                    <label>Ім'я:</label>
+                    <input type="text" id="user-name" class="form-input">
+                </div>
+                <div class="setting-item">
+                    <label>Email:</label>
+                    <input type="email" id="user-email" class="form-input" disabled>
+                </div>
+                <button class="btn-login" id="save-profile-btn">Зберегти зміни</button>
+            </div>
+
+            <div class="settings-group">
+                <h3>Тема</h3>
+                <div class="setting-item">
+                    <label for="theme-select">Виберіть тему:</label>
+                    <select id="theme-select" class="form-input">
+                        <option value="light">Світла тема</option>
+                        <option value="dark">Темна тема</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3>Безпека</h3>
+                <div class="setting-item">
+                    <label>Змінити пароль:</label>
+                    <input type="password" id="new-password" placeholder="Новий пароль" class="form-input">
+                </div>
+                <button class="btn-login" id="update-password-btn">Оновити пароль</button>
+            </div>
+
+            <div class="settings-group">
+                <h3>Повідомлення</h3>
+                <div class="setting-item checkbox">
+                    <input type="checkbox" id="email-notify" checked>
+                    <label for="email-notify">Отримувати сповіщення по email</label>
+                </div>
+                <div class="setting-item checkbox">
+                    <input type="checkbox" id="new-client-notify" checked>
+                    <label for="new-client-notify">Сповіщення про нових клієнтів</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </div>
 </main>
