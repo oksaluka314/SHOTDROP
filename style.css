@@ -3,8 +3,8 @@
    ================================================================ */
 :root {
     --primary-bg: #FAFAF8;
-    --secondary-bg: #FFFFFF;
-    --primary-text: #353434;
+    --secondary-bg: hsl(0, 0%, 100%);
+    --primary-text: #000000;
     --secondary-text: #000000;
     --header-bg: #9B8DB8;
     --header-hover: #E8DFE8;
