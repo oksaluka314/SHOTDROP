@@ -5,7 +5,7 @@
     --primary-bg: #FAFAF8;
     --secondary-bg: hsl(0, 0%, 100%);
     --primary-text: #000000;
-    --secondary-text: #000000;
+    --secondary-text: #16031f;
     --header-bg: #9B8DB8;
     --header-hover: #E8DFE8;
     --button-bg: #ceb8e5;
@@ -215,7 +215,7 @@ th {
     top: 1%;
     left: 1%;
     background-color: var(--button-hover);
-    color: white;
+    color: var(--secondary-text);
     padding: 0.5% 1%;
     border-radius: 3px;
     font-size: 12px;
@@ -245,7 +245,7 @@ th {
 }
 
 #logout-btn {
-    color: rgb(214, 17, 17);
+    color: rgb(88, 3, 35);
     font-weight: 700;
 }
 
@@ -264,7 +264,7 @@ th {
 
 .dashboard-nav.active {
     background-color: var(--button-bg);
-    color: #FFFFFF;
+    color: var(--secondary-text);
     font-weight: 700;
 }
 
