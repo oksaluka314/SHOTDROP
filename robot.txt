@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /private-gallery.html
+Sitemap: https://shotdrop.vercel.app/sitemap.xml
